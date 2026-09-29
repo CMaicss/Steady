@@ -10,6 +10,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from steady.application import Application
 from steady import APP_NAME, VERSION
 from steady.window import MainWindow
+from steady.timeutils import format_timestamp
 from gi.repository import Adw, GLib, Gtk
 
 
@@ -73,6 +74,34 @@ def check_task_filter(window):
     model = window.task_filter.get_model()
     assert [model.get_string(index) for index in range(model.get_n_items())] == ["未闭环", "已闭环", "全部"]
     assert 0 < window.task_filter.get_width() < window.search.get_width()
+
+
+def check_task_metadata(window):
+    settle()
+    for row in window.task_rows:
+        task = row.task
+        details = row.deadline_label.get_parent()
+        footer = row.timestamp_label.get_parent()
+        assert details.get_parent() is footer
+        assert footer.get_orientation() == Gtk.Orientation.HORIZONTAL
+        assert details.get_next_sibling() is row.timestamp_label
+        assert row.timestamp_label.get_xalign() == 1
+        assert row.timestamp_label.get_justify() == Gtk.Justification.RIGHT
+        left = details.get_allocation()
+        right = row.timestamp_label.get_allocation()
+        assert left.x + left.width <= right.x
+        assert right.x + right.width == footer.get_width()
+        assert right.y + right.height == footer.get_height()
+        timestamp = task["closed_at"] if task["status"] == "closed" else task["updated_at"]
+        assert format_timestamp(timestamp) in row.timestamp_label.get_text()
+        assert format_timestamp(timestamp, True) in row.timestamp_label.get_tooltip_text()
+        assert row.deadline_label.get_visible() == bool(task["deadline"] or task["status"] == "closed")
+        todo_label = row.deadline_label.get_next_sibling()
+        assert bool(todo_label) == bool(task["todo_total"])
+        if todo_label:
+            assert todo_label.get_text() == f"Todo {task['todo_done']} / {task['todo_total']}"
+        if not task["deadline"] and not task["todo_total"] and task["status"] == "open":
+            assert "\n" not in row.timestamp_label.get_text()
 
 
 def check_management(window, store, output):
@@ -148,6 +177,7 @@ def check_management(window, store, output):
     settle()
     window.task_filter.set_selected(2)
     window.refresh(task_id)
+    check_task_metadata(window)
     assert not window.todo_list.get_first_child().check_button.get_sensitive()
     original_closed_at = store.get_task(task_id)["closed_at"]
     close_event = store.events(task_id, kinds=("closed",))[0]
@@ -239,6 +269,7 @@ def check(output):
             task_id = window.selected_id
             assert app.store.get_task(task_id)["deadline"] is None
             assert not window.task_rows[0].deadline_label.get_visible()
+            check_task_metadata(window)
             assert window.active_form is None
             check_status_row(window)
             assert window.status_button.get_label() == "闭环任务"
@@ -275,6 +306,7 @@ def check(output):
             assert "稍后继续填写的草稿" in (Path(directory) / "state.json").read_text()
             other_id = app.store.create_task("完成接口联调", "跟进鉴权、字段校验与联调验收。", "2026-10-01T18:00:00+08:00")
             app.store.add_progress(other_id, "鉴权已通过，等待对方确认返回字段。")
+            app.store.add_todo(other_id, "确认返回字段")
             app.store.create_task("确认发布前检查项", "确认剩余事项，并记录交付结论。", "2026-09-28T18:00:00+08:00")
             window.refresh(other_id)
             assert window.selected_id == other_id
@@ -377,6 +409,7 @@ def check(output):
             form.force_close()
             settle()
             assert window.active_form is None
+            check_task_metadata(window)
             if output:
                 settle(4.2)
                 window.detail_scroll.get_vadjustment().set_value(0)
@@ -397,8 +430,16 @@ def check(output):
             assert window.split.get_collapsed()
             window.split.set_show_content(False)
             check_task_filter(window)
+            check_task_metadata(window)
             if output:
                 screenshot(window, output / "narrow-list.png")
+            window.set_default_size(360, 760)
+            settle(0.4)
+            check_task_metadata(window)
+            if output:
+                screenshot(window, output / "compact-list-360.png")
+            window.set_default_size(390, 760)
+            settle(0.4)
             window.split.set_show_content(True)
             check_status_row(window)
             window.detail_scroll.get_vadjustment().set_value(0)

@@ -308,13 +308,25 @@ class MainWindow(Adw.ApplicationWindow):
         preview_label.set_lines(2)
         preview_label.set_ellipsize(Pango.EllipsizeMode.END)
         box.append(preview_label)
+        footer = Gtk.Box(spacing=12)
+        details = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=4, hexpand=True, valign=Gtk.Align.END)
         row.deadline_label = label(style="deadline-badge")
-        box.append(row.deadline_label)
-        footer = label(("闭环于 " + format_timestamp(task["closed_at"])) if task["status"] == "closed" else ("更新于 " + format_timestamp(task["updated_at"])), "dim-label")
-        footer.add_css_class("caption")
-        box.append(footer)
+        details.append(row.deadline_label)
         if task["todo_total"]:
-            box.append(label(f"Todo {task['todo_done']} / {task['todo_total']}", "caption"))
+            details.append(label(f"Todo {task['todo_done']} / {task['todo_total']}", "caption"))
+        footer.append(details)
+        closed = task["status"] == "closed"
+        prefix = "闭环于" if closed else "更新于"
+        timestamp = task["closed_at"] if closed else task["updated_at"]
+        separator = "\n" if task["deadline"] or task["todo_total"] or closed else " "
+        row.timestamp_label = label(prefix + separator + format_timestamp(timestamp), "dim-label", wrap=False)
+        row.timestamp_label.add_css_class("caption")
+        row.timestamp_label.set_xalign(1)
+        row.timestamp_label.set_justify(Gtk.Justification.RIGHT)
+        row.timestamp_label.set_valign(Gtk.Align.END)
+        row.timestamp_label.set_tooltip_text(prefix + " " + format_timestamp(timestamp, True))
+        footer.append(row.timestamp_label)
+        box.append(footer)
         row.set_child(box)
         self._update_row_deadline(row)
         return row
