@@ -1,0 +1,1180 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Steady 1.2.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-29 19:08+0800\n"
+"PO-Revision-Date: 2026-09-29 12:00+0800\n"
+"Last-Translator: Steady contributors\n"
+"Language-Team: en\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: steady/__main__.py:18
+#, python-brace-format
+msgid "{app_name} — Local tasks and progress"
+msgstr "{app_name} — Local tasks and progress"
+
+#: steady/__main__.py:20
+msgid "Use a separate data directory (defaults to XDG_DATA_HOME)"
+msgstr "Use a separate data directory (defaults to XDG_DATA_HOME)"
+
+#: steady/__main__.py:21
+msgid "Interface language for this launch only; auto follows the system"
+msgstr "Interface language for this launch only; auto follows the system"
+
+#: steady/__main__.py:26
+#, python-brace-format
+msgid ""
+"Could not load GTK/libadwaita: {error}\n"
+"On Ubuntu/Debian, install python3-gi gir1.2-gtk-4.0 gir1.2-adw-1 and run with /usr/bin/python3."
+msgstr ""
+"Could not load GTK/libadwaita: {error}\n"
+"On Ubuntu/Debian, install python3-gi gir1.2-gtk-4.0 gir1.2-adw-1 and run with /usr/bin/python3."
+
+#: steady/application.py:54
+#, python-brace-format
+msgid "{app_name} requires GTK ≥ 4.12 and libadwaita ≥ 1.5. Install newer system libraries or use Flatpak."
+msgstr "{app_name} requires GTK ≥ 4.12 and libadwaita ≥ 1.5. Install newer system libraries or use Flatpak."
+
+#: steady/application.py:57
+msgid "Legacy task data found. Close the old application, then run python3 tools/install.py from the source directory to migrate. Existing data will not be overwritten and no empty database will be created."
+msgstr "Legacy task data found. Close the old application, then run python3 tools/install.py from the source directory to migrate. Existing data will not be overwritten and no empty database will be created."
+
+#: steady/application.py:64
+msgid "Could not open task data"
+msgstr "Could not open task data"
+
+#: steady/application.py:64
+#, python-brace-format
+msgid ""
+"{error}\n"
+"\n"
+"Data location: {data_dir}\n"
+"\n"
+"Existing data will not be erased. Check directory permissions and disk space, or start with a separate data directory and restore a backup."
+msgstr ""
+"{error}\n"
+"\n"
+"Data location: {data_dir}\n"
+"\n"
+"Existing data will not be erased. Check directory permissions and disk space, or start with a separate data directory and restore a backup."
+
+#: steady/dialogs.py:15 steady/widgets.py:34
+msgid "Cancel"
+msgstr "Cancel"
+
+#: steady/dialogs.py:36
+msgid "Discard unsaved changes?"
+msgstr "Discard unsaved changes?"
+
+#: steady/dialogs.py:36
+msgid "Your changes will not be saved if you close this dialog."
+msgstr "Your changes will not be saved if you close this dialog."
+
+#: steady/dialogs.py:36
+msgid "Discard Changes"
+msgstr "Discard Changes"
+
+#: steady/dialogs.py:49
+msgid "Language"
+msgstr "Language"
+
+#: steady/dialogs.py:49 steady/dialogs.py:76 steady/dialogs.py:183
+msgid "Save"
+msgstr "Save"
+
+#: steady/dialogs.py:53
+msgid "The language will change on the next launch. Task content is not translated, and unsubmitted drafts are kept."
+msgstr "The language will change on the next launch. Task content is not translated, and unsubmitted drafts are kept."
+
+#: steady/dialogs.py:54
+msgid "Interface Language"
+msgstr "Interface Language"
+
+#: steady/dialogs.py:54
+msgid "System Default"
+msgstr "System Default"
+
+#: steady/dialogs.py:76
+msgid "Edit Task"
+msgstr "Edit Task"
+
+#: steady/dialogs.py:76 steady/window.ui:71
+msgid "New Task"
+msgstr "New Task"
+
+#: steady/dialogs.py:76 steady/window.py:12 steady/window.py:15
+msgid "Create Task"
+msgstr "Create Task"
+
+#: steady/dialogs.py:78
+msgid "Task Information"
+msgstr "Task Information"
+
+#: steady/dialogs.py:79
+msgid "Task Title · Required"
+msgstr "Task Title · Required"
+
+#: steady/dialogs.py:83
+msgid "Task Description · Optional"
+msgstr "Task Description · Optional"
+
+#: steady/dialogs.py:84
+msgid "Task description, optional"
+msgstr "Task description, optional"
+
+#: steady/dialogs.py:88 steady/window.py:13
+msgid "Deadline"
+msgstr "Deadline"
+
+#: steady/dialogs.py:88
+msgid "Tasks can be created and worked on without a deadline."
+msgstr "Tasks can be created and worked on without a deadline."
+
+#: steady/dialogs.py:89
+msgid "Set a Deadline"
+msgstr "Set a Deadline"
+
+#: steady/dialogs.py:89
+msgid "Optional; tasks without a deadline have no countdown"
+msgstr "Optional; tasks without a deadline have no countdown"
+
+#: steady/dialogs.py:94
+msgid "Date · YYYY-MM-DD"
+msgstr "Date · YYYY-MM-DD"
+
+#: steady/dialogs.py:97
+msgid "Choose a date"
+msgstr "Choose a date"
+
+#: steady/dialogs.py:105
+msgid "Time"
+msgstr "Time"
+
+#: steady/dialogs.py:112
+msgid "Deadline: hour"
+msgstr "Deadline: hour"
+
+#: steady/dialogs.py:113
+msgid "Deadline: minute"
+msgstr "Deadline: minute"
+
+#: steady/dialogs.py:165
+msgid "Local time, defaulting to 23:59. You can change or remove the deadline at any time."
+msgstr "Local time, defaulting to 23:59. You can change or remove the deadline at any time."
+
+#: steady/dialogs.py:167
+msgid "Example date: 2026-09-29"
+msgstr "Example date: 2026-09-29"
+
+#: steady/dialogs.py:216 steady/window.py:394 steady/window.ui:78
+msgid "Close Task"
+msgstr "Close Task"
+
+#: steady/dialogs.py:216
+msgid "Reopen Task"
+msgstr "Reopen Task"
+
+#: steady/dialogs.py:216
+msgid "Confirm Closure"
+msgstr "Confirm Closure"
+
+#: steady/dialogs.py:216 steady/window.py:12 steady/window.py:394
+msgid "Reopen"
+msgstr "Reopen"
+
+#: steady/dialogs.py:220
+msgid "The task will leave the open list. All history will be kept."
+msgstr "The task will leave the open list. All history will be kept."
+
+#: steady/dialogs.py:220
+msgid "The task will return to the open list. Previous closure records will be kept."
+msgstr "The task will return to the open list. Previous closure records will be kept."
+
+#: steady/dialogs.py:222
+#, python-brace-format
+msgid "Unfinished Todo items: {pending_todos}. You can still close this task; these items will not be checked automatically."
+msgstr "Unfinished Todo items: {pending_todos}. You can still close this task; these items will not be checked automatically."
+
+#: steady/dialogs.py:223
+msgid "Closure Note · Optional"
+msgstr "Closure Note · Optional"
+
+#: steady/dialogs.py:223
+msgid "Reopening Note · Optional"
+msgstr "Reopening Note · Optional"
+
+#: steady/dialogs.py:224 steady/storage.py:220
+msgid "Closure note"
+msgstr "Closure note"
+
+#: steady/dialogs.py:224 steady/storage.py:229
+msgid "Reopening note"
+msgstr "Reopening note"
+
+#: steady/i18n.py:50 steady/i18n.py:54
+msgid "Invalid language setting"
+msgstr "Invalid language setting"
+
+#: steady/i18n.py:59
+#, python-brace-format
+msgid "Could not read the language setting; using the system language: {error}"
+msgstr "Could not read the language setting; using the system language: {error}"
+
+#: steady/storage.py:23
+#, python-brace-format
+msgid "{label} must be valid text"
+msgstr "{label} must be valid text"
+
+#: steady/storage.py:26
+#, python-brace-format
+msgid "Required field: {label}"
+msgstr "Required field: {label}"
+
+#: steady/storage.py:28
+msgid "{label} cannot exceed {maximum:,} characters"
+msgstr "{label} cannot exceed {maximum:,} characters"
+
+#: steady/storage.py:38
+msgid "Invalid deadline"
+msgstr "Invalid deadline"
+
+#: steady/storage.py:66
+#, python-brace-format
+msgid "This database was created by a newer version. Open it with a newer {app_name}"
+msgstr "This database was created by a newer version. Open it with a newer {app_name}"
+
+#: steady/storage.py:69
+#, python-brace-format
+msgid "This file is not a {app_name} database. Opening was stopped to protect your data"
+msgstr "This file is not a {app_name} database. Opening was stopped to protect your data"
+
+#: steady/storage.py:102
+msgid "Database integrity check failed. Restore a backup; the original file has not been overwritten"
+msgstr "Database integrity check failed. Restore a backup; the original file has not been overwritten"
+
+#: steady/storage.py:164
+msgid "Task not found; a different backup may have been restored"
+msgstr "Task not found; a different backup may have been restored"
+
+#: steady/storage.py:170
+msgid "This task is closed. Reopen it first"
+msgstr "This task is closed. Reopen it first"
+
+#: steady/storage.py:180 steady/storage.py:194 steady/storage.py:425
+#: steady/window.py:13
+msgid "Task title"
+msgstr "Task title"
+
+#: steady/storage.py:181 steady/storage.py:195 steady/storage.py:426
+#: steady/window.py:13
+msgid "Task description"
+msgstr "Task description"
+
+#: steady/storage.py:211
+msgid "Progress note"
+msgstr "Progress note"
+
+#: steady/storage.py:233
+msgid "This task is already open"
+msgstr "This task is already open"
+
+#: steady/storage.py:247
+msgid "Activity not found or already deleted"
+msgstr "Activity not found or already deleted"
+
+#: steady/storage.py:254
+msgid "Activity text"
+msgstr "Activity text"
+
+#: steady/storage.py:272
+msgid "Todo not found or already deleted"
+msgstr "Todo not found or already deleted"
+
+#: steady/storage.py:290 steady/storage.py:301 steady/storage.py:503
+#: steady/window.py:614
+msgid "Todo text"
+msgstr "Todo text"
+
+#: steady/storage.py:315
+msgid "Todo state must be checked or unchecked"
+msgstr "Todo state must be checked or unchecked"
+
+#: steady/storage.py:341
+msgid "Unknown task status"
+msgstr "Unknown task status"
+
+#: steady/storage.py:368
+msgid "Unknown activity type"
+msgstr "Unknown activity type"
+
+#: steady/storage.py:393
+msgid "A backup cannot overwrite the application database or settings"
+msgstr "A backup cannot overwrite the application database or settings"
+
+#: steady/storage.py:396
+msgid "The backup exceeds 32 MiB and cannot be exported as a restorable JSON backup. Close the application and back up the entire data directory."
+msgstr "The backup exceeds 32 MiB and cannot be exported as a restorable JSON backup. Close the application and back up the entire data directory."
+
+#: steady/storage.py:404
+msgid "The backup exceeds 32 MB and cannot be imported"
+msgstr "The backup exceeds 32 MB and cannot be imported"
+
+#: steady/storage.py:408
+#, python-brace-format
+msgid "Invalid backup: {error}"
+msgstr "Invalid backup: {error}"
+
+#: steady/storage.py:413
+#, python-brace-format
+msgid "Not a supported {app_name} backup"
+msgstr "Not a supported {app_name} backup"
+
+#: steady/storage.py:417
+msgid "Missing tasks or activity history"
+msgstr "Missing tasks or activity history"
+
+#: steady/storage.py:422
+msgid "Invalid or duplicate task ID"
+msgstr "Invalid or duplicate task ID"
+
+#: steady/storage.py:424
+msgid "Incomplete task fields"
+msgstr "Incomplete task fields"
+
+#: steady/storage.py:431
+msgid "Task status and closure time do not match"
+msgstr "Task status and closure time do not match"
+
+#: steady/storage.py:439
+msgid "Invalid or duplicate activity ID"
+msgstr "Invalid or duplicate activity ID"
+
+#: steady/storage.py:444
+msgid "Invalid activity or missing parent task"
+msgstr "Invalid activity or missing parent task"
+
+#: steady/storage.py:446
+msgid "Invalid activity type"
+msgstr "Invalid activity type"
+
+#: steady/storage.py:447 steady/storage.py:522
+msgid "History note"
+msgstr "History note"
+
+#: steady/storage.py:456
+msgid "Task is missing its creation record"
+msgstr "Task is missing its creation record"
+
+#: steady/storage.py:459 steady/storage.py:520
+msgid "Creation record is missing its task snapshot"
+msgstr "Creation record is missing its task snapshot"
+
+#: steady/storage.py:460
+msgid "Historical task title"
+msgstr "Historical task title"
+
+#: steady/storage.py:461
+msgid "Historical task description"
+msgstr "Historical task description"
+
+#: steady/storage.py:468
+msgid "Invalid activity structure"
+msgstr "Invalid activity structure"
+
+#: steady/storage.py:471
+msgid "Invalid state in reopening record"
+msgstr "Invalid state in reopening record"
+
+#: steady/storage.py:474
+msgid "A closed task was modified without being reopened"
+msgstr "A closed task was modified without being reopened"
+
+#: steady/storage.py:479 steady/storage.py:526
+msgid "Invalid update record fields"
+msgstr "Invalid update record fields"
+
+#: steady/storage.py:482
+msgid "Before/after values in update record do not match"
+msgstr "Before/after values in update record do not match"
+
+#: steady/storage.py:490
+msgid "Task and activity history do not match"
+msgstr "Task and activity history do not match"
+
+#: steady/storage.py:493
+msgid "The backup is missing its Todo list"
+msgstr "The backup is missing its Todo list"
+
+#: steady/storage.py:497
+msgid "Incomplete Todo fields"
+msgstr "Incomplete Todo fields"
+
+#: steady/storage.py:500
+msgid "Invalid or duplicate Todo ID"
+msgstr "Invalid or duplicate Todo ID"
+
+#: steady/storage.py:502
+msgid "Todo is missing its parent task"
+msgstr "Todo is missing its parent task"
+
+#: steady/storage.py:505
+msgid "Todo state and completion time do not match"
+msgstr "Todo state and completion time do not match"
+
+#: steady/storage.py:521
+msgid "Historical title"
+msgstr "Historical title"
+
+#: steady/storage.py:529
+msgid "Invalid before/after values in update record"
+msgstr "Invalid before/after values in update record"
+
+#: steady/storage.py:534
+msgid "Historical content"
+msgstr "Historical content"
+
+#: steady/storage.py:540
+msgid "Invalid Todo activity record"
+msgstr "Invalid Todo activity record"
+
+#: steady/storage.py:542
+msgid "Invalid Todo activity ID"
+msgstr "Invalid Todo activity ID"
+
+#: steady/storage.py:543 steady/storage.py:545
+msgid "Historical Todo text"
+msgstr "Historical Todo text"
+
+#: steady/storage.py:547
+msgid "Activity contains unknown fields"
+msgstr "Activity contains unknown fields"
+
+#: steady/timeutils.py:12
+msgid "Time must be an ISO 8601 string with a time zone"
+msgstr "Time must be an ISO 8601 string with a time zone"
+
+#: steady/timeutils.py:15
+msgid "Time zone is missing"
+msgstr "Time zone is missing"
+
+#: steady/timeutils.py:30
+msgid "This time does not exist due to a daylight-saving transition. Choose another time"
+msgstr "This time does not exist due to a daylight-saving transition. Choose another time"
+
+#: steady/timeutils.py:33
+msgid "Enter a valid date (YYYY-MM-DD) and time; times skipped by daylight saving are not allowed"
+msgstr "Enter a valid date (YYYY-MM-DD) and time; times skipped by daylight saving are not allowed"
+
+#: steady/timeutils.py:38
+msgid "Not set"
+msgstr "Not set"
+
+#: steady/timeutils.py:48
+msgid "Closed on time"
+msgstr "Closed on time"
+
+#: steady/timeutils.py:48
+msgid "Closed late"
+msgstr "Closed late"
+
+#: steady/timeutils.py:51
+msgid "Due soon"
+msgstr "Due soon"
+
+#: steady/timeutils.py:57
+#, python-brace-format
+msgid "{count} day"
+msgid_plural "{count} days"
+msgstr[0] "{count} day"
+msgstr[1] "{count} days"
+
+#: steady/timeutils.py:59 steady/timeutils.py:61
+#, python-brace-format
+msgid "{count} hour"
+msgid_plural "{count} hours"
+msgstr[0] "{count} hour"
+msgstr[1] "{count} hours"
+
+#: steady/timeutils.py:63 steady/timeutils.py:65
+#, python-brace-format
+msgid "{count} minute"
+msgid_plural "{count} minutes"
+msgstr[0] "{count} minute"
+msgstr[1] "{count} minutes"
+
+#: steady/timeutils.py:67
+msgid "Due now"
+msgstr "Due now"
+
+#: steady/timeutils.py:67
+msgid "Less than 1 minute overdue"
+msgstr "Less than 1 minute overdue"
+
+#: steady/timeutils.py:68
+#, python-brace-format
+msgid "Overdue by {duration}"
+msgstr "Overdue by {duration}"
+
+#: steady/timeutils.py:68
+#, python-brace-format
+msgid "{duration} left"
+msgstr "{duration} left"
+
+#: steady/widgets.py:20
+msgid "Description"
+msgstr "Description"
+
+#: steady/widgets.py:46 steady/window.py:787
+msgid "OK"
+msgstr "OK"
+
+#: steady/window.py:12
+msgid "Task Updated"
+msgstr "Task Updated"
+
+#: steady/window.py:12 steady/window.ui:115
+msgid "Progress Added"
+msgstr "Progress Added"
+
+#: steady/window.py:12
+msgid "Task Closed"
+msgstr "Task Closed"
+
+#: steady/window.py:12 steady/window.py:15
+msgid "Todo Actions"
+msgstr "Todo Actions"
+
+#: steady/window.py:14
+msgid "Open"
+msgstr "Open"
+
+#: steady/window.py:14 steady/window.py:341
+msgid "Closed"
+msgstr "Closed"
+
+#: steady/window.py:14
+msgid "All"
+msgstr "All"
+
+#: steady/window.py:15
+msgid "All Types"
+msgstr "All Types"
+
+#: steady/window.py:15
+msgid "Progress Only"
+msgstr "Progress Only"
+
+#: steady/window.py:15
+msgid "Task Updates"
+msgstr "Task Updates"
+
+#: steady/window.py:15
+msgid "Close / Reopen"
+msgstr "Close / Reopen"
+
+#: steady/window.py:16 steady/window.ui:92
+msgid "Add Todo"
+msgstr "Add Todo"
+
+#: steady/window.py:16 steady/window.py:568 steady/window.py:614
+msgid "Edit Todo"
+msgstr "Edit Todo"
+
+#: steady/window.py:16
+msgid "Complete Todo"
+msgstr "Complete Todo"
+
+#: steady/window.py:16
+msgid "Uncheck Todo"
+msgstr "Uncheck Todo"
+
+#: steady/window.py:16 steady/window.py:569 steady/window.py:623
+msgid "Delete Todo"
+msgstr "Delete Todo"
+
+#: steady/window.py:104
+msgid "Edit Task…"
+msgstr "Edit Task…"
+
+#: steady/window.py:105
+msgid "Delete Task…"
+msgstr "Delete Task…"
+
+#: steady/window.py:113
+msgid "Export Backup…"
+msgstr "Export Backup…"
+
+#: steady/window.py:114
+msgid "Restore Backup…"
+msgstr "Restore Backup…"
+
+#: steady/window.py:115
+msgid "Open Data Folder"
+msgstr "Open Data Folder"
+
+#: steady/window.py:118
+msgid "Language…"
+msgstr "Language…"
+
+#: steady/window.py:119 steady/window.py:786
+msgid "Keyboard Shortcuts"
+msgstr "Keyboard Shortcuts"
+
+#: steady/window.py:120
+#, python-brace-format
+msgid "About {app_name}"
+msgstr "About {app_name}"
+
+#: steady/window.py:121
+msgid "Quit"
+msgstr "Quit"
+
+#: steady/window.py:147
+msgid "Action could not be completed"
+msgstr "Action could not be completed"
+
+#: steady/window.py:157
+msgid "Invalid settings format"
+msgstr "Invalid settings format"
+
+#: steady/window.py:160
+msgid "Invalid draft format"
+msgstr "Invalid draft format"
+
+#: steady/window.py:163
+msgid "Invalid Todo draft format"
+msgstr "Invalid Todo draft format"
+
+#: steady/window.py:173
+#, python-brace-format
+msgid "Could not read or protect settings file: {state_path}; {error}"
+msgstr "Could not read or protect settings file: {state_path}; {error}"
+
+#: steady/window.py:174
+msgid "Could not read settings. The original file was kept in the data directory."
+msgstr "Could not read settings. The original file was kept in the data directory."
+
+#: steady/window.py:199
+msgid "Draft saved locally · Ctrl+Enter to submit"
+msgstr "Draft saved locally · Ctrl+Enter to submit"
+
+#: steady/window.py:202
+msgid "Draft could not be saved. Do not quit"
+msgstr "Draft could not be saved. Do not quit"
+
+#: steady/window.py:205
+msgid "Draft / window state not saved"
+msgstr "Draft / window state not saved"
+
+#: steady/window.py:213
+msgid "Over the 50,000-character limit. Shorten the text before saving"
+msgstr "Over the 50,000-character limit. Shorten the text before saving"
+
+#: steady/window.py:218
+msgid "Saving draft…"
+msgstr "Saving draft…"
+
+#: steady/window.py:218 steady/window.py:385 steady/window.ui:118
+msgid "Ctrl+Enter to save progress"
+msgstr "Ctrl+Enter to save progress"
+
+#: steady/window.py:226
+msgid "A progress note can contain up to 50,000 characters. Split it into several notes"
+msgstr "A progress note can contain up to 50,000 characters. Split it into several notes"
+
+#: steady/window.py:283
+msgid "No tasks found"
+msgstr "No tasks found"
+
+#: steady/window.py:283
+msgid "Try other keywords or change the task status filter."
+msgstr "Try other keywords or change the task status filter."
+
+#: steady/window.py:285
+msgid "No tasks yet"
+msgstr "No tasks yet"
+
+#: steady/window.py:285
+msgid "Click + to create a task. The deadline can be left empty."
+msgstr "Click + to create a task. The deadline can be left empty."
+
+#: steady/window.py:287
+msgid "No closed tasks"
+msgstr "No closed tasks"
+
+#: steady/window.py:287
+msgid "Closed tasks will appear here."
+msgstr "Closed tasks will appear here."
+
+#: steady/window.py:289 steady/window.ui:48
+msgid "No open tasks"
+msgstr "No open tasks"
+
+#: steady/window.py:289
+msgid "All tasks are closed. Find them under “Closed” or “All”."
+msgstr "All tasks are closed. Find them under “Closed” or “All”."
+
+#: steady/window.py:309
+msgid "No progress yet. Record your next step."
+msgstr "No progress yet. Record your next step."
+
+#: steady/window.py:322
+msgid "Closed at"
+msgstr "Closed at"
+
+#: steady/window.py:322
+msgid "Updated at"
+msgstr "Updated at"
+
+#: steady/window.py:345
+msgid "Due "
+msgstr "Due "
+
+#: steady/window.py:345 steady/window.py:405
+msgid "No deadline"
+msgstr "No deadline"
+
+#: steady/window.py:385
+msgid "Local draft restored · Ctrl+Enter to submit"
+msgstr "Local draft restored · Ctrl+Enter to submit"
+
+#: steady/window.py:391
+msgctxt "task-status"
+msgid "Open"
+msgstr "Open"
+
+#: steady/window.py:391
+msgctxt "task-status"
+msgid "Closed"
+msgstr "Closed"
+
+#: steady/window.py:393
+#, python-brace-format
+msgid ""
+"Created {created_at}\n"
+"Last updated {updated_at}"
+msgstr ""
+"Created {created_at}\n"
+"Last updated {updated_at}"
+
+#: steady/window.py:393
+#, python-brace-format
+msgid ""
+"\n"
+"Closed {closed_at}"
+msgstr ""
+"\n"
+"Closed {closed_at}"
+
+#: steady/window.py:410
+#, python-brace-format
+msgid "Due {deadline} · {text}"
+msgstr "Due {deadline} · {text}"
+
+#: steady/window.py:419
+#, python-brace-format
+msgid "Activity · {count}"
+msgstr "Activity · {count}"
+
+#: steady/window.py:421
+msgid "No activity yet. Add a progress note."
+msgstr "No activity yet. Add a progress note."
+
+#: steady/window.py:421
+msgid "No activity yet. Reopen the task to add progress."
+msgstr "No activity yet. Reopen the task to add progress."
+
+#: steady/window.py:422
+msgid "No activity matches this filter."
+msgstr "No activity matches this filter."
+
+#: steady/window.py:434 steady/window.py:507
+msgid "Edit Activity"
+msgstr "Edit Activity"
+
+#: steady/window.py:435
+msgid "Delete Activity Record"
+msgstr "Delete Activity Record"
+
+#: steady/window.py:441
+#, python-brace-format
+msgid "Edited {time}"
+msgstr "Edited {time}"
+
+#: steady/window.py:449
+msgid "Original Action Details"
+msgstr "Original Action Details"
+
+#: steady/window.py:459
+#, python-brace-format
+msgid "Deadline: {time}"
+msgstr "Deadline: {time}"
+
+#: steady/window.py:466
+#, python-brace-format
+msgid ""
+"{field}\n"
+"Before: {before}\n"
+"After: {after}"
+msgstr ""
+"{field}\n"
+"Before: {before}\n"
+"After: {after}"
+
+#: steady/window.py:466
+msgid "(empty)"
+msgstr "(empty)"
+
+#: steady/window.py:469
+#, python-brace-format
+msgid "{action}: {title}"
+msgstr "{action}: {title}"
+
+#: steady/window.py:470
+#, python-brace-format
+msgid "Original text: {before}"
+msgstr "Original text: {before}"
+
+#: steady/window.py:506
+msgid "Activity updated"
+msgstr "Activity updated"
+
+#: steady/window.py:506 steady/window.py:666
+msgid "No changes to save"
+msgstr "No changes to save"
+
+#: steady/window.py:507
+msgid "Only the displayed text of this record is changed, not the current task or Todo state. The original time is kept and the edit time is recorded."
+msgstr "Only the displayed text of this record is changed, not the current task or Todo state. The original time is kept and the edit time is recorded."
+
+#: steady/window.py:516
+msgid "Activity deleted; the task's current state is unchanged"
+msgstr "Activity deleted; the task's current state is unchanged"
+
+#: steady/window.py:517
+msgid "Delete this activity?"
+msgstr "Delete this activity?"
+
+#: steady/window.py:517
+#, python-brace-format
+msgid ""
+"{kind} · {created_at}\n"
+"\n"
+"Only this record will be deleted; the current task or Todo state will not be reverted. This cannot be undone. You can export a backup first."
+msgstr ""
+"{kind} · {created_at}\n"
+"\n"
+"Only this record will be deleted; the current task or Todo state will not be reverted. This cannot be undone. You can export a backup first."
+
+#: steady/window.py:517
+msgid "Delete Activity"
+msgstr "Delete Activity"
+
+#: steady/window.py:532
+msgid "Task, activity history and Todo items deleted"
+msgstr "Task, activity history and Todo items deleted"
+
+#: steady/window.py:533
+msgid "Delete task?"
+msgstr "Delete task?"
+
+#: steady/window.py:533
+#, python-brace-format
+msgid ""
+"All activity, Todo items and unsubmitted drafts for “{title}” will also be deleted.\n"
+"\n"
+"This cannot be undone. Close the task instead to keep its history, or export a backup first."
+msgstr ""
+"All activity, Todo items and unsubmitted drafts for “{title}” will also be deleted.\n"
+"\n"
+"This cannot be undone. Close the task instead to keep its history, or export a backup first."
+
+#: steady/window.py:533
+msgid "Delete Task"
+msgstr "Delete Task"
+
+#: steady/window.py:537
+#, python-brace-format
+msgid "Todo List · {done} / {total}"
+msgstr "Todo List · {done} / {total}"
+
+#: steady/window.py:537 steady/window.ui:85
+msgid "Todo List · Optional"
+msgstr "Todo List · Optional"
+
+#: steady/window.py:564
+#, python-brace-format
+msgid "Completed {time}"
+msgstr "Completed {time}"
+
+#: steady/window.py:604
+msgid "Todo state not saved"
+msgstr "Todo state not saved"
+
+#: steady/window.py:623
+msgid "Delete this Todo?"
+msgstr "Delete this Todo?"
+
+#: steady/window.py:623
+#, python-brace-format
+msgid "“{title}” will be removed from the list. Previous activity records will be kept."
+msgstr "“{title}” will be removed from the list. Previous activity records will be kept."
+
+#: steady/window.py:655
+msgid "Task created"
+msgstr "Task created"
+
+#: steady/window.py:666
+msgid "Task updated and changes recorded"
+msgstr "Task updated and changes recorded"
+
+#: steady/window.py:676
+msgid "Unsubmitted progress"
+msgstr "Unsubmitted progress"
+
+#: steady/window.py:676
+msgid "Add this progress note or clear the input before closing the task. Drafts will not be silently discarded."
+msgstr "Add this progress note or clear the input before closing the task. Drafts will not be silently discarded."
+
+#: steady/window.py:679
+msgid "Unsubmitted Todo"
+msgstr "Unsubmitted Todo"
+
+#: steady/window.py:679
+msgid "Add this Todo or clear the input before closing the task."
+msgstr "Add this Todo or clear the input before closing the task."
+
+#: steady/window.py:694
+msgid "Task closed. Find it under “All”"
+msgstr "Task closed. Find it under “All”"
+
+#: steady/window.py:694
+msgid "Task reopened"
+msgstr "Task reopened"
+
+#: steady/window.py:708
+msgid "Progress saved"
+msgstr "Progress saved"
+
+#: steady/window.py:718
+#, python-brace-format
+msgid "{app_name} Backup (JSON)"
+msgstr "{app_name} Backup (JSON)"
+
+#: steady/window.py:721
+msgid "All Files"
+msgstr "All Files"
+
+#: steady/window.py:730
+msgid "Export tasks and full history"
+msgstr "Export tasks and full history"
+
+#: steady/window.py:738
+msgid "Choose a local file location"
+msgstr "Choose a local file location"
+
+#: steady/window.py:740
+msgid "Backup exported with tasks, activity and Todo items (excluding drafts)"
+msgstr "Backup exported with tasks, activity and Todo items (excluding drafts)"
+
+#: steady/window.py:743 steady/window.py:745
+msgid "Export failed"
+msgstr "Export failed"
+
+#: steady/window.py:752
+msgid "Handle unsubmitted drafts first"
+msgstr "Handle unsubmitted drafts first"
+
+#: steady/window.py:752
+msgid "Restoring a backup replaces your tasks. Submit or clear progress and Todo drafts for all tasks first, so they are not associated with the wrong tasks."
+msgstr "Restoring a backup replaces your tasks. Submit or clear progress and Todo drafts for all tasks first, so they are not associated with the wrong tasks."
+
+#: steady/window.py:754
+#, python-brace-format
+msgid "Select a {app_name} backup"
+msgstr "Select a {app_name} backup"
+
+#: steady/window.py:760
+msgid "Choose a local backup file"
+msgstr "Choose a local backup file"
+
+#: steady/window.py:762
+msgid "Replace current tasks with this backup?"
+msgstr "Replace current tasks with this backup?"
+
+#: steady/window.py:762
+#, python-brace-format
+msgid ""
+"Backup contents — Tasks: {tasks_count}; activity records: {events_count}; Todo items: {todos_count}.\n"
+"\n"
+"Existing data will be saved to the backups folder in the data directory before restoring. This replaces data; it does not merge it."
+msgstr ""
+"Backup contents — Tasks: {tasks_count}; activity records: {events_count}; Todo items: {todos_count}.\n"
+"\n"
+"Existing data will be saved to the backups folder in the data directory before restoring. This replaces data; it does not merge it."
+
+#: steady/window.py:762
+msgid "Restore Backup"
+msgstr "Restore Backup"
+
+#: steady/window.py:765
+msgid "Restore failed"
+msgstr "Restore failed"
+
+#: steady/window.py:767
+msgid "Could not read backup"
+msgstr "Could not read backup"
+
+#: steady/window.py:779
+msgid "Backup restored; previous data was backed up automatically"
+msgstr "Backup restored; previous data was backed up automatically"
+
+#: steady/window.py:786
+msgid ""
+"Ctrl+N  New task\n"
+"Ctrl+F  Search tasks and progress\n"
+"Ctrl+Enter  Add progress\n"
+"Ctrl+Q  Quit and save drafts\n"
+"\n"
+"Use the arrow keys to navigate the task list.\n"
+"Deadlines can be added, changed or removed at any time."
+msgstr ""
+"Ctrl+N  New task\n"
+"Ctrl+F  Search tasks and progress\n"
+"Ctrl+Enter  Add progress\n"
+"Ctrl+Q  Quit and save drafts\n"
+"\n"
+"Use the arrow keys to navigate the task list.\n"
+"Deadlines can be added, changed or removed at any time."
+
+#: steady/window.py:793
+msgid ""
+"Simple, offline task and progress management.\n"
+"Every step recorded, every task brought to a close."
+msgstr ""
+"Simple, offline task and progress management.\n"
+"Every step recorded, every task brought to a close."
+
+#: steady/window.py:802
+msgid "Language saved. Quit normally and reopen Steady to apply it; your drafts will be kept."
+msgstr "Language saved. Quit normally and reopen Steady to apply it; your drafts will be kept."
+
+#: steady/window.py:816
+msgid "Quit anyway?"
+msgstr "Quit anyway?"
+
+#: steady/window.py:816
+msgid "Some drafts could not be written to disk. Cancel and submit your progress, or quit and discard unsaved drafts."
+msgstr "Some drafts could not be written to disk. Cancel and submit your progress, or quit and discard unsaved drafts."
+
+#: steady/window.py:816
+msgid "Quit Anyway"
+msgstr "Quit Anyway"
+
+#: steady/window.ui:20
+msgid "Tasks"
+msgstr "Tasks"
+
+#: steady/window.ui:25
+msgid "See every task through"
+msgstr "See every task through"
+
+#: steady/window.ui:26
+msgid "Main menu"
+msgstr "Main menu"
+
+#: steady/window.ui:27
+msgid "New task (Ctrl+N)"
+msgstr "New task (Ctrl+N)"
+
+#: steady/window.ui:34
+msgid "Search tasks and progress"
+msgstr "Search tasks and progress"
+
+#: steady/window.ui:35
+msgid "Filter by task status together with search keywords"
+msgstr "Filter by task status together with search keywords"
+
+#: steady/window.ui:35
+msgid "Task status filter"
+msgstr "Task status filter"
+
+#: steady/window.ui:44
+msgid "Load More Tasks"
+msgstr "Load More Tasks"
+
+#: steady/window.ui:48
+msgid "Create a task and take the first step."
+msgstr "Create a task and take the first step."
+
+#: steady/window.ui:51
+msgid "Saved locally · Works offline"
+msgstr "Saved locally · Works offline"
+
+#: steady/window.ui:60 steady/window.ui:65
+msgid "Task Details"
+msgstr "Task Details"
+
+#: steady/window.ui:66
+msgid "Task actions: edit or delete"
+msgstr "Task actions: edit or delete"
+
+#: steady/window.ui:71
+msgid "Every step, recorded"
+msgstr "Every step, recorded"
+
+#: steady/window.ui:71
+msgid "Select a task to view its progress, or create your first task."
+msgstr "Select a task to view its progress, or create your first task."
+
+#: steady/window.ui:88
+msgid "Load More Todo Items"
+msgstr "Load More Todo Items"
+
+#: steady/window.ui:89
+msgid "Break tasks into small steps. Using a checklist is entirely optional."
+msgstr "Break tasks into small steps. Using a checklist is entirely optional."
+
+#: steady/window.ui:91
+msgid "Add an actionable step…"
+msgstr "Add an actionable step…"
+
+#: steady/window.ui:91
+msgid "New Todo text, Enter to add"
+msgstr "New Todo text, Enter to add"
+
+#: steady/window.ui:98
+msgid "Activity"
+msgstr "Activity"
+
+#: steady/window.ui:99
+msgid "Filter by activity type"
+msgstr "Filter by activity type"
+
+#: steady/window.ui:99
+msgid "Activity type filter"
+msgstr "Activity type filter"
+
+#: steady/window.ui:102
+msgid "No activity matches this filter"
+msgstr "No activity matches this filter"
+
+#: steady/window.ui:103
+msgid "Load Earlier Activity"
+msgstr "Load Earlier Activity"
+
+#: steady/window.ui:116
+msgid "Progress note, Ctrl+Enter to save"
+msgstr "Progress note, Ctrl+Enter to save"
+
+#: steady/window.ui:119
+msgid "Add Progress"
+msgstr "Add Progress"
+
+#: steady/window.ui:123
+msgid "This task is closed. Reopen it to add more progress."
+msgstr "This task is closed. Reopen it to add more progress."

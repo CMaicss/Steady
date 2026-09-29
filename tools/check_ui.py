@@ -1,11 +1,14 @@
 #!/usr/bin/python3
 import argparse
+import os
 import sys
 import tempfile
 import time
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+if __name__ == "__main__":
+    os.environ["STEADY_LANGUAGE"] = "zh_CN"
 
 from steady.application import Application
 from steady import APP_NAME, VERSION

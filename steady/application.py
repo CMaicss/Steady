@@ -1,4 +1,5 @@
 import hashlib
+import os
 import sys
 from pathlib import Path
 
@@ -10,13 +11,15 @@ gi.require_version("Adw", "1")
 from gi.repository import Adw, Gdk, Gio, GLib, Gtk
 
 from . import APP_ID, APP_NAME
+from .i18n import _, configure, read_language
 from .storage import Store
 
 
 class Application(Adw.Application):
-    def __init__(self, data_dir=None, non_unique=False):
+    def __init__(self, data_dir=None, non_unique=False, language=None):
         default_directory = (Path(GLib.get_user_data_dir()) / "steady").resolve()
         directory = Path(data_dir).expanduser().resolve() if data_dir else default_directory
+        self.language = configure(language or os.environ.get("STEADY_LANGUAGE") or read_language(directory))
         app_id = APP_ID
         if directory != default_directory:
             app_id += ".Profile" + hashlib.sha256(str(directory).encode()).hexdigest()[:12]
@@ -48,17 +51,17 @@ class Application(Adw.Application):
             return
         try:
             if Gtk.get_minor_version() < 12 or (Adw.get_major_version() == 1 and Adw.get_minor_version() < 5):
-                raise RuntimeError(f"{APP_NAME} 需要 GTK ≥ 4.12 和 libadwaita ≥ 1.5。请安装较新的系统依赖或使用 Flatpak。")
+                raise RuntimeError(_("{app_name} requires GTK ≥ 4.12 and libadwaita ≥ 1.5. Install newer system libraries or use Flatpak.").format(app_name=APP_NAME))
             from .window import MainWindow
             if self.data_dir == self.default_data_dir and not (self.data_dir / "tasks.sqlite3").exists() and (self.data_dir.with_name("mtodo") / "tasks.sqlite3").exists():
-                raise RuntimeError("发现旧版任务数据。请先正常关闭旧版应用，再从源码目录运行 python3 tools/install.py 迁移；原数据不会被覆盖，也不会创建空白数据库。")
+                raise RuntimeError(_("Legacy task data found. Close the old application, then run python3 tools/install.py from the source directory to migrate. Existing data will not be overwritten and no empty database will be created."))
             self.store = Store(self.data_dir / "tasks.sqlite3")
             self.window = MainWindow(self, self.store)
             self.window.present()
         except Exception as error:
             print(f"{APP_NAME}: {error}", file=sys.stderr)
             self.window = Adw.ApplicationWindow(application=self, title=APP_NAME, default_width=520, default_height=360)
-            page = Adw.StatusPage(title="无法打开任务数据", description=f"{error}\n\n数据位置：{self.data_dir}\n\n原数据不会被自动清空。请检查目录权限、磁盘空间，或使用独立数据目录启动后恢复备份。", icon_name="dialog-error-symbolic")
+            page = Adw.StatusPage(title=_("Could not open task data"), description=_("{error}\n\nData location: {data_dir}\n\nExisting data will not be erased. Check directory permissions and disk space, or start with a separate data directory and restore a backup.").format(error=error, data_dir=self.data_dir), icon_name="dialog-error-symbolic")
             self.window.set_content(page)
             self.window.present()
 

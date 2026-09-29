@@ -5,10 +5,40 @@
   <name>Steady</name>
   <summary>Keep local tasks and their progress until closure</summary>
   <summary xml:lang="zh_CN">本地记录任务与每一步进展，直到闭环</summary>
+  <summary xml:lang="zh_TW">在本機記錄任務與每一步進度，直到結案</summary>
+  <summary xml:lang="de">Lokale Aufgaben und Fortschritte bis zum Abschluss verwalten</summary>
+  <summary xml:lang="fr">Suivre les tâches et leur progression en local jusqu'à leur clôture</summary>
+  <summary xml:lang="ru">Локальное управление задачами и ходом работы до завершения</summary>
+  <summary xml:lang="es">Gestionar tareas y avances locales hasta su cierre</summary>
+  <summary xml:lang="ja">タスクと進捗をローカルで完了まで記録</summary>
   <description>
     <p>Steady is an offline task manager for the GNOME desktop. Create tasks with optional deadlines, append timestamped progress, and close or reopen tasks without losing their history.</p>
     <p>Break tasks into optional checklists, edit or delete activity records, and filter history by type. Search tasks and progress, keep local drafts, and export or restore complete backups. No account or server is required.</p>
+    <p xml:lang="zh_CN">Steady 是离线的 GNOME 原生任务管理应用。任务只需填写标题即可创建，截止时间与 Todo 清单均可选。记录带时间的进展，随时闭环或重新打开任务，并保留完整历史。</p>
+    <p xml:lang="zh_CN">按状态和关键词筛选任务，编辑或删除活动记录，保存本地草稿，导出与恢复完整备份。所有数据保存在本地，无需账号或服务器。</p>
+    <p xml:lang="zh_TW">Steady 是離線的 GNOME 原生任務管理應用程式。任務只需填寫標題即可建立，截止時間與 Todo 清單皆為選用。記錄帶時間的進度，隨時結案或重新開啟任務，並保留完整歷程。</p>
+    <p xml:lang="zh_TW">按狀態和關鍵字篩選任務，編輯或刪除活動記錄，儲存本機草稿，匯出與還原備份。所有資料保存在本機，無需帳號或伺服器。</p>
+    <p xml:lang="de">Steady ist eine native GNOME-Anwendung zur Offline-Aufgabenverwaltung. Aufgaben mit optionalen Fristen erstellen, Fortschritte mit Zeitstempel festhalten und Aufgaben abschließen oder wieder öffnen, ohne den Verlauf zu verlieren.</p>
+    <p xml:lang="de">Optionale Todo-Listen nutzen, Aktivitäten bearbeiten oder löschen und nach Typ filtern. Aufgaben durchsuchen, lokale Entwürfe speichern und vollständige Sicherungen exportieren oder wiederherstellen. Kein Konto oder Server erforderlich.</p>
+    <p xml:lang="fr">Steady est un gestionnaire de tâches hors ligne pour GNOME. Créez des tâches avec une échéance facultative, ajoutez des notes de progression horodatées et clôturez ou rouvrez les tâches sans perdre leur historique.</p>
+    <p xml:lang="fr">Utilisez des listes Todo facultatives, modifiez ou supprimez les activités et filtrez l'historique par type. Recherchez des tâches, conservez des brouillons locaux et exportez ou restaurez des sauvegardes complètes. Aucun compte ni serveur requis.</p>
+    <p xml:lang="ru">Steady — автономный менеджер задач для GNOME. Создавайте задачи с необязательным сроком, добавляйте записи о ходе работы с отметками времени, закрывайте и открывайте задачи снова без потери истории.</p>
+    <p xml:lang="ru">Используйте необязательные списки Todo, изменяйте и удаляйте записи, фильтруйте историю по типу. Ищите задачи, сохраняйте локальные черновики, экспортируйте и восстанавливайте полные резервные копии. Учётная запись и сервер не нужны.</p>
+    <p xml:lang="es">Steady es un gestor de tareas sin conexión para GNOME. Cree tareas con fecha límite opcional, añada avances con marcas de tiempo y cierre o reabra tareas sin perder su historial.</p>
+    <p xml:lang="es">Use listas Todo opcionales, edite o elimine actividades y filtre el historial por tipo. Busque tareas, conserve borradores locales y exporte o restaure copias completas. No necesita cuenta ni servidor.</p>
+    <p xml:lang="ja">Steady は GNOME 向けのオフラインタスク管理アプリです。期限は任意で設定でき、時刻付きの進捗を記録し、履歴を失わずにタスクを完了・再開できます。</p>
+    <p xml:lang="ja">任意の Todo リストで作業を分割し、活動記録を編集・削除して種類で絞り込めます。タスクの検索、ローカルの下書き保存、完全なバックアップの出力と復元に対応しています。アカウントやサーバーは不要です。</p>
   </description>
+  <languages>
+    <lang percentage="100">en</lang>
+    <lang percentage="100">zh_CN</lang>
+    <lang percentage="100">zh_TW</lang>
+    <lang percentage="100">de</lang>
+    <lang percentage="100">fr</lang>
+    <lang percentage="100">ru</lang>
+    <lang percentage="100">es</lang>
+    <lang percentage="100">ja</lang>
+  </languages>
   <launchable type="desktop-id">io.github.steady.Steady.desktop</launchable>
   <content_rating type="oars-1.1"/>
   <releases>

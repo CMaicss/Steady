@@ -1,0 +1,1177 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Steady 1.2.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-29 19:08+0800\n"
+"PO-Revision-Date: 2026-09-29 12:00+0800\n"
+"Last-Translator: Steady contributors\n"
+"Language-Team: zh_TW\n"
+"Language: zh_TW\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: steady/__main__.py:18
+#, python-brace-format
+msgid "{app_name} — Local tasks and progress"
+msgstr "{app_name} — 本機任務與進度管理"
+
+#: steady/__main__.py:20
+msgid "Use a separate data directory (defaults to XDG_DATA_HOME)"
+msgstr "使用獨立資料目錄（預設遵循 XDG_DATA_HOME）"
+
+#: steady/__main__.py:21
+msgid "Interface language for this launch only; auto follows the system"
+msgstr "介面語言，僅本次啟動生效；auto 跟隨系統"
+
+#: steady/__main__.py:26
+#, python-brace-format
+msgid ""
+"Could not load GTK/libadwaita: {error}\n"
+"On Ubuntu/Debian, install python3-gi gir1.2-gtk-4.0 gir1.2-adw-1 and run with /usr/bin/python3."
+msgstr ""
+"無法載入 GTK/libadwaita：{error}\n"
+"Ubuntu/Debian 請安裝 python3-gi gir1.2-gtk-4.0 gir1.2-adw-1，並使用 /usr/bin/python3 執行。"
+
+#: steady/application.py:54
+#, python-brace-format
+msgid "{app_name} requires GTK ≥ 4.12 and libadwaita ≥ 1.5. Install newer system libraries or use Flatpak."
+msgstr "{app_name} 需要 GTK ≥ 4.12 和 libadwaita ≥ 1.5。請安裝較新的系統套件或使用 Flatpak。"
+
+#: steady/application.py:57
+msgid "Legacy task data found. Close the old application, then run python3 tools/install.py from the source directory to migrate. Existing data will not be overwritten and no empty database will be created."
+msgstr "發現舊版任務資料。請先正常關閉舊版應用程式，再從原始碼目錄執行 python3 tools/install.py 遷移；原資料不會被覆寫，也不會建立空白資料庫。"
+
+#: steady/application.py:64
+msgid "Could not open task data"
+msgstr "無法開啟任務資料"
+
+#: steady/application.py:64
+#, python-brace-format
+msgid ""
+"{error}\n"
+"\n"
+"Data location: {data_dir}\n"
+"\n"
+"Existing data will not be erased. Check directory permissions and disk space, or start with a separate data directory and restore a backup."
+msgstr ""
+"{error}\n"
+"\n"
+"資料位置：{data_dir}\n"
+"\n"
+"原資料不會被自動清空。請檢查目錄權限、磁碟空間，或使用獨立資料目錄啟動後還原備份。"
+
+#: steady/dialogs.py:15 steady/widgets.py:34
+msgid "Cancel"
+msgstr "取消"
+
+#: steady/dialogs.py:36
+msgid "Discard unsaved changes?"
+msgstr "放棄尚未儲存的內容？"
+
+#: steady/dialogs.py:36
+msgid "Your changes will not be saved if you close this dialog."
+msgstr "關閉後，本次填寫的內容不會儲存。"
+
+#: steady/dialogs.py:36
+msgid "Discard Changes"
+msgstr "放棄修改"
+
+#: steady/dialogs.py:49
+msgid "Language"
+msgstr "語言 / Language"
+
+#: steady/dialogs.py:49 steady/dialogs.py:76 steady/dialogs.py:183
+msgid "Save"
+msgstr "儲存"
+
+#: steady/dialogs.py:53
+msgid "The language will change on the next launch. Task content is not translated, and unsubmitted drafts are kept."
+msgstr "語言將於下次啟動時生效。任務內容不會被翻譯，尚未提交的草稿會保留。"
+
+#: steady/dialogs.py:54
+msgid "Interface Language"
+msgstr "介面語言"
+
+#: steady/dialogs.py:54
+msgid "System Default"
+msgstr "跟隨系統"
+
+#: steady/dialogs.py:76
+msgid "Edit Task"
+msgstr "編輯任務"
+
+#: steady/dialogs.py:76 steady/window.ui:71
+msgid "New Task"
+msgstr "新增任務"
+
+#: steady/dialogs.py:76 steady/window.py:12 steady/window.py:15
+msgid "Create Task"
+msgstr "建立任務"
+
+#: steady/dialogs.py:78
+msgid "Task Information"
+msgstr "任務資訊"
+
+#: steady/dialogs.py:79
+msgid "Task Title · Required"
+msgstr "任務標題 · 必填"
+
+#: steady/dialogs.py:83
+msgid "Task Description · Optional"
+msgstr "任務說明 · 選填"
+
+#: steady/dialogs.py:84
+msgid "Task description, optional"
+msgstr "任務說明，選填"
+
+#: steady/dialogs.py:88 steady/window.py:13
+msgid "Deadline"
+msgstr "截止時間"
+
+#: steady/dialogs.py:88
+msgid "Tasks can be created and worked on without a deadline."
+msgstr "不設定也可以建立和推進任務。"
+
+#: steady/dialogs.py:89
+msgid "Set a Deadline"
+msgstr "設定截止時間"
+
+#: steady/dialogs.py:89
+msgid "Optional; tasks without a deadline have no countdown"
+msgstr "選用；未設定的任務不會顯示倒數計時"
+
+#: steady/dialogs.py:94
+msgid "Date · YYYY-MM-DD"
+msgstr "日期 · YYYY-MM-DD"
+
+#: steady/dialogs.py:97
+msgid "Choose a date"
+msgstr "選擇日期"
+
+#: steady/dialogs.py:105
+msgid "Time"
+msgstr "時間"
+
+#: steady/dialogs.py:112
+msgid "Deadline: hour"
+msgstr "截止時間：小時"
+
+#: steady/dialogs.py:113
+msgid "Deadline: minute"
+msgstr "截止時間：分鐘"
+
+#: steady/dialogs.py:165
+msgid "Local time, defaulting to 23:59. You can change or remove the deadline at any time."
+msgstr "使用本地時間，預設為 23:59；可隨時修改或移除截止時間。"
+
+#: steady/dialogs.py:167
+msgid "Example date: 2026-09-29"
+msgstr "日期格式範例：2026-09-29"
+
+#: steady/dialogs.py:216 steady/window.py:394 steady/window.ui:78
+msgid "Close Task"
+msgstr "結案任務"
+
+#: steady/dialogs.py:216
+msgid "Reopen Task"
+msgstr "重新開啟任務"
+
+#: steady/dialogs.py:216
+msgid "Confirm Closure"
+msgstr "確認結案"
+
+#: steady/dialogs.py:216 steady/window.py:12 steady/window.py:394
+msgid "Reopen"
+msgstr "重新開啟"
+
+#: steady/dialogs.py:220
+msgid "The task will leave the open list. All history will be kept."
+msgstr "結案後將移出未結案清單，歷程記錄會完整保留。"
+
+#: steady/dialogs.py:220
+msgid "The task will return to the open list. Previous closure records will be kept."
+msgstr "任務將回到未結案清單，之前的結案記錄仍然保留。"
+
+#: steady/dialogs.py:222
+#, python-brace-format
+msgid "Unfinished Todo items: {pending_todos}. You can still close this task; these items will not be checked automatically."
+msgstr "還有 {pending_todos} 項 Todo 未完成。仍可結案，但不會自動勾選這些項目。"
+
+#: steady/dialogs.py:223
+msgid "Closure Note · Optional"
+msgstr "結案說明 · 選填"
+
+#: steady/dialogs.py:223
+msgid "Reopening Note · Optional"
+msgstr "重新開啟說明 · 選填"
+
+#: steady/dialogs.py:224 steady/storage.py:220
+msgid "Closure note"
+msgstr "結案說明"
+
+#: steady/dialogs.py:224 steady/storage.py:229
+msgid "Reopening note"
+msgstr "重新開啟說明"
+
+#: steady/i18n.py:50 steady/i18n.py:54
+msgid "Invalid language setting"
+msgstr "語言設定無效"
+
+#: steady/i18n.py:59
+#, python-brace-format
+msgid "Could not read the language setting; using the system language: {error}"
+msgstr "無法讀取語言設定，將跟隨系統語言：{error}"
+
+#: steady/storage.py:23
+#, python-brace-format
+msgid "{label} must be valid text"
+msgstr "{label}必須是有效文字"
+
+#: steady/storage.py:26
+#, python-brace-format
+msgid "Required field: {label}"
+msgstr "請填寫{label}"
+
+#: steady/storage.py:28
+msgid "{label} cannot exceed {maximum:,} characters"
+msgstr "{label}不能超過 {maximum:,} 個字元"
+
+#: steady/storage.py:38
+msgid "Invalid deadline"
+msgstr "截止時間無效"
+
+#: steady/storage.py:66
+#, python-brace-format
+msgid "This database was created by a newer version. Open it with a newer {app_name}"
+msgstr "資料庫由更新版本建立，請使用新版 {app_name} 開啟"
+
+#: steady/storage.py:69
+#, python-brace-format
+msgid "This file is not a {app_name} database. Opening was stopped to protect your data"
+msgstr "此檔案不是 {app_name} 資料庫；為保護資料，已停止開啟"
+
+#: steady/storage.py:102
+msgid "Database integrity check failed. Restore a backup; the original file has not been overwritten"
+msgstr "資料庫完整性檢查失敗，請從備份還原；原檔案未被覆寫"
+
+#: steady/storage.py:164
+msgid "Task not found; a different backup may have been restored"
+msgstr "任務不存在，可能已還原其他備份"
+
+#: steady/storage.py:170
+msgid "This task is closed. Reopen it first"
+msgstr "此任務已結案，請先重新開啟"
+
+#: steady/storage.py:180 steady/storage.py:194 steady/storage.py:425
+#: steady/window.py:13
+msgid "Task title"
+msgstr "任務標題"
+
+#: steady/storage.py:181 steady/storage.py:195 steady/storage.py:426
+#: steady/window.py:13
+msgid "Task description"
+msgstr "任務說明"
+
+#: steady/storage.py:211
+msgid "Progress note"
+msgstr "進度說明"
+
+#: steady/storage.py:233
+msgid "This task is already open"
+msgstr "此任務已處於未結案狀態"
+
+#: steady/storage.py:247
+msgid "Activity not found or already deleted"
+msgstr "活動記錄不存在或已被刪除"
+
+#: steady/storage.py:254
+msgid "Activity text"
+msgstr "活動內容"
+
+#: steady/storage.py:272
+msgid "Todo not found or already deleted"
+msgstr "Todo 不存在或已被刪除"
+
+#: steady/storage.py:290 steady/storage.py:301 steady/storage.py:503
+#: steady/window.py:614
+msgid "Todo text"
+msgstr "Todo 內容"
+
+#: steady/storage.py:315
+msgid "Todo state must be checked or unchecked"
+msgstr "Todo 狀態必須是勾選或未勾選"
+
+#: steady/storage.py:341
+msgid "Unknown task status"
+msgstr "未知的任務狀態"
+
+#: steady/storage.py:368
+msgid "Unknown activity type"
+msgstr "未知的活動記錄類型"
+
+#: steady/storage.py:393
+msgid "A backup cannot overwrite the application database or settings"
+msgstr "備份不能覆寫應用程式資料庫或設定檔"
+
+#: steady/storage.py:396
+msgid "The backup exceeds 32 MiB and cannot be exported as a restorable JSON backup. Close the application and back up the entire data directory."
+msgstr "備份超過 32 MiB，無法匯出可還原的 JSON 備份。請關閉應用程式後完整備份資料目錄。"
+
+#: steady/storage.py:404
+msgid "The backup exceeds 32 MB and cannot be imported"
+msgstr "備份超過 32 MB，無法匯入"
+
+#: steady/storage.py:408
+#, python-brace-format
+msgid "Invalid backup: {error}"
+msgstr "備份無效：{error}"
+
+#: steady/storage.py:413
+#, python-brace-format
+msgid "Not a supported {app_name} backup"
+msgstr "不是支援的 {app_name} 備份"
+
+#: steady/storage.py:417
+msgid "Missing tasks or activity history"
+msgstr "缺少任務或操作歷程"
+
+#: steady/storage.py:422
+msgid "Invalid or duplicate task ID"
+msgstr "任務編號無效或重複"
+
+#: steady/storage.py:424
+msgid "Incomplete task fields"
+msgstr "任務欄位不完整"
+
+#: steady/storage.py:431
+msgid "Task status and closure time do not match"
+msgstr "任務狀態與結案時間不一致"
+
+#: steady/storage.py:439
+msgid "Invalid or duplicate activity ID"
+msgstr "歷程編號無效或重複"
+
+#: steady/storage.py:444
+msgid "Invalid activity or missing parent task"
+msgstr "歷程記錄無效或缺少對應任務"
+
+#: steady/storage.py:446
+msgid "Invalid activity type"
+msgstr "歷程類型無效"
+
+#: steady/storage.py:447 steady/storage.py:522
+msgid "History note"
+msgstr "歷程說明"
+
+#: steady/storage.py:456
+msgid "Task is missing its creation record"
+msgstr "任務缺少建立記錄"
+
+#: steady/storage.py:459 steady/storage.py:520
+msgid "Creation record is missing its task snapshot"
+msgstr "建立記錄缺少任務快照"
+
+#: steady/storage.py:460
+msgid "Historical task title"
+msgstr "歷程中的任務標題"
+
+#: steady/storage.py:461
+msgid "Historical task description"
+msgstr "歷程中的任務說明"
+
+#: steady/storage.py:468
+msgid "Invalid activity structure"
+msgstr "歷程記錄結構無效"
+
+#: steady/storage.py:471
+msgid "Invalid state in reopening record"
+msgstr "重新開啟記錄的狀態無效"
+
+#: steady/storage.py:474
+msgid "A closed task was modified without being reopened"
+msgstr "已結案任務存在未重新開啟的修改"
+
+#: steady/storage.py:479 steady/storage.py:526
+msgid "Invalid update record fields"
+msgstr "修改記錄欄位無效"
+
+#: steady/storage.py:482
+msgid "Before/after values in update record do not match"
+msgstr "修改記錄前後值不一致"
+
+#: steady/storage.py:490
+msgid "Task and activity history do not match"
+msgstr "任務與操作歷程不一致"
+
+#: steady/storage.py:493
+msgid "The backup is missing its Todo list"
+msgstr "備份缺少 Todo 清單"
+
+#: steady/storage.py:497
+msgid "Incomplete Todo fields"
+msgstr "Todo 欄位不完整"
+
+#: steady/storage.py:500
+msgid "Invalid or duplicate Todo ID"
+msgstr "Todo 編號無效或重複"
+
+#: steady/storage.py:502
+msgid "Todo is missing its parent task"
+msgstr "Todo 缺少對應任務"
+
+#: steady/storage.py:505
+msgid "Todo state and completion time do not match"
+msgstr "Todo 狀態與完成時間不一致"
+
+#: steady/storage.py:521
+msgid "Historical title"
+msgstr "歷程標題"
+
+#: steady/storage.py:529
+msgid "Invalid before/after values in update record"
+msgstr "修改記錄前後值無效"
+
+#: steady/storage.py:534
+msgid "Historical content"
+msgstr "歷程內容"
+
+#: steady/storage.py:540
+msgid "Invalid Todo activity record"
+msgstr "Todo 操作記錄無效"
+
+#: steady/storage.py:542
+msgid "Invalid Todo activity ID"
+msgstr "Todo 操作編號無效"
+
+#: steady/storage.py:543 steady/storage.py:545
+msgid "Historical Todo text"
+msgstr "Todo 歷程內容"
+
+#: steady/storage.py:547
+msgid "Activity contains unknown fields"
+msgstr "活動記錄包含未知欄位"
+
+#: steady/timeutils.py:12
+msgid "Time must be an ISO 8601 string with a time zone"
+msgstr "時間必須為含時區的 ISO 8601 字串"
+
+#: steady/timeutils.py:15
+msgid "Time zone is missing"
+msgstr "時間缺少時區"
+
+#: steady/timeutils.py:30
+msgid "This time does not exist due to a daylight-saving transition. Choose another time"
+msgstr "所選時間因日光節約時間切換而不存在，請選擇其他時間"
+
+#: steady/timeutils.py:33
+msgid "Enter a valid date (YYYY-MM-DD) and time; times skipped by daylight saving are not allowed"
+msgstr "請輸入有效日期（YYYY-MM-DD）和時間；日光節約時間跳過的時間不可選"
+
+#: steady/timeutils.py:38
+msgid "Not set"
+msgstr "未設定"
+
+#: steady/timeutils.py:48
+msgid "Closed on time"
+msgstr "準時結案"
+
+#: steady/timeutils.py:48
+msgid "Closed late"
+msgstr "逾期結案"
+
+#: steady/timeutils.py:51
+msgid "Due soon"
+msgstr "即將到期"
+
+#: steady/timeutils.py:57
+#, python-brace-format
+msgid "{count} day"
+msgid_plural "{count} days"
+msgstr[0] "{count} 天"
+
+#: steady/timeutils.py:59 steady/timeutils.py:61
+#, python-brace-format
+msgid "{count} hour"
+msgid_plural "{count} hours"
+msgstr[0] "{count} 小時"
+
+#: steady/timeutils.py:63 steady/timeutils.py:65
+#, python-brace-format
+msgid "{count} minute"
+msgid_plural "{count} minutes"
+msgstr[0] "{count} 分鐘"
+
+#: steady/timeutils.py:67
+msgid "Due now"
+msgstr "已到期"
+
+#: steady/timeutils.py:67
+msgid "Less than 1 minute overdue"
+msgstr "已逾期不足 1 分鐘"
+
+#: steady/timeutils.py:68
+#, python-brace-format
+msgid "Overdue by {duration}"
+msgstr "已逾期 {duration}"
+
+#: steady/timeutils.py:68
+#, python-brace-format
+msgid "{duration} left"
+msgstr "剩餘 {duration}"
+
+#: steady/widgets.py:20
+msgid "Description"
+msgstr "說明"
+
+#: steady/widgets.py:46 steady/window.py:787
+msgid "OK"
+msgstr "知道了"
+
+#: steady/window.py:12
+msgid "Task Updated"
+msgstr "修改任務"
+
+#: steady/window.py:12 steady/window.ui:115
+msgid "Progress Added"
+msgstr "新增進度"
+
+#: steady/window.py:12
+msgid "Task Closed"
+msgstr "任務結案"
+
+#: steady/window.py:12 steady/window.py:15
+msgid "Todo Actions"
+msgstr "Todo 操作"
+
+#: steady/window.py:14
+msgid "Open"
+msgstr "未結案"
+
+#: steady/window.py:14 steady/window.py:341
+msgid "Closed"
+msgstr "已結案"
+
+#: steady/window.py:14
+msgid "All"
+msgstr "全部"
+
+#: steady/window.py:15
+msgid "All Types"
+msgstr "全部類型"
+
+#: steady/window.py:15
+msgid "Progress Only"
+msgstr "僅進度"
+
+#: steady/window.py:15
+msgid "Task Updates"
+msgstr "任務修改"
+
+#: steady/window.py:15
+msgid "Close / Reopen"
+msgstr "結案 / 重開"
+
+#: steady/window.py:16 steady/window.ui:92
+msgid "Add Todo"
+msgstr "新增 Todo"
+
+#: steady/window.py:16 steady/window.py:568 steady/window.py:614
+msgid "Edit Todo"
+msgstr "編輯 Todo"
+
+#: steady/window.py:16
+msgid "Complete Todo"
+msgstr "完成 Todo"
+
+#: steady/window.py:16
+msgid "Uncheck Todo"
+msgstr "取消完成 Todo"
+
+#: steady/window.py:16 steady/window.py:569 steady/window.py:623
+msgid "Delete Todo"
+msgstr "刪除 Todo"
+
+#: steady/window.py:104
+msgid "Edit Task…"
+msgstr "編輯任務…"
+
+#: steady/window.py:105
+msgid "Delete Task…"
+msgstr "刪除任務…"
+
+#: steady/window.py:113
+msgid "Export Backup…"
+msgstr "匯出備份…"
+
+#: steady/window.py:114
+msgid "Restore Backup…"
+msgstr "從備份還原…"
+
+#: steady/window.py:115
+msgid "Open Data Folder"
+msgstr "開啟資料夾"
+
+#: steady/window.py:118
+msgid "Language…"
+msgstr "語言 / Language…"
+
+#: steady/window.py:119 steady/window.py:786
+msgid "Keyboard Shortcuts"
+msgstr "鍵盤快捷鍵"
+
+#: steady/window.py:120
+#, python-brace-format
+msgid "About {app_name}"
+msgstr "關於 {app_name}"
+
+#: steady/window.py:121
+msgid "Quit"
+msgstr "結束"
+
+#: steady/window.py:147
+msgid "Action could not be completed"
+msgstr "操作未完成"
+
+#: steady/window.py:157
+msgid "Invalid settings format"
+msgstr "設定格式無效"
+
+#: steady/window.py:160
+msgid "Invalid draft format"
+msgstr "草稿格式無效"
+
+#: steady/window.py:163
+msgid "Invalid Todo draft format"
+msgstr "Todo 草稿格式無效"
+
+#: steady/window.py:173
+#, python-brace-format
+msgid "Could not read or protect settings file: {state_path}; {error}"
+msgstr "無法讀取或保護設定檔：{state_path}；{error}"
+
+#: steady/window.py:174
+msgid "Could not read settings. The original file was kept in the data directory."
+msgstr "設定檔無法讀取，原檔案已保留在資料目錄。"
+
+#: steady/window.py:199
+msgid "Draft saved locally · Ctrl+Enter to submit"
+msgstr "草稿已儲存於本機 · Ctrl+Enter 提交"
+
+#: steady/window.py:202
+msgid "Draft could not be saved. Do not quit"
+msgstr "草稿儲存失敗，請勿結束"
+
+#: steady/window.py:205
+msgid "Draft / window state not saved"
+msgstr "草稿／視窗狀態未儲存"
+
+#: steady/window.py:213
+msgid "Over the 50,000-character limit. Shorten the text before saving"
+msgstr "超過 50,000 字限制，請縮短內容後儲存"
+
+#: steady/window.py:218
+msgid "Saving draft…"
+msgstr "正在儲存草稿…"
+
+#: steady/window.py:218 steady/window.py:385 steady/window.ui:118
+msgid "Ctrl+Enter to save progress"
+msgstr "Ctrl+Enter 儲存進度"
+
+#: steady/window.py:226
+msgid "A progress note can contain up to 50,000 characters. Split it into several notes"
+msgstr "一筆進度最多 50,000 字，請分成多筆記錄"
+
+#: steady/window.py:283
+msgid "No tasks found"
+msgstr "沒有找到任務"
+
+#: steady/window.py:283
+msgid "Try other keywords or change the task status filter."
+msgstr "試試其他關鍵字，或切換任務狀態篩選。"
+
+#: steady/window.py:285
+msgid "No tasks yet"
+msgstr "還沒有任務"
+
+#: steady/window.py:285
+msgid "Click + to create a task. The deadline can be left empty."
+msgstr "點選 + 建立任務。截止時間可以留空。"
+
+#: steady/window.py:287
+msgid "No closed tasks"
+msgstr "沒有已結案任務"
+
+#: steady/window.py:287
+msgid "Closed tasks will appear here."
+msgstr "結案後的任務會顯示在這裡。"
+
+#: steady/window.py:289 steady/window.ui:48
+msgid "No open tasks"
+msgstr "沒有未結案任務"
+
+#: steady/window.py:289
+msgid "All tasks are closed. Find them under “Closed” or “All”."
+msgstr "所有任務都已結案，可以在「已結案」或「全部」中查看。"
+
+#: steady/window.py:309
+msgid "No progress yet. Record your next step."
+msgstr "尚無進度，記錄下一步。"
+
+#: steady/window.py:322
+msgid "Closed at"
+msgstr "結案於"
+
+#: steady/window.py:322
+msgid "Updated at"
+msgstr "更新於"
+
+#: steady/window.py:345
+msgid "Due "
+msgstr "截止於 "
+
+#: steady/window.py:345 steady/window.py:405
+msgid "No deadline"
+msgstr "未設定截止時間"
+
+#: steady/window.py:385
+msgid "Local draft restored · Ctrl+Enter to submit"
+msgstr "已還原本機草稿 · Ctrl+Enter 提交"
+
+#: steady/window.py:391
+msgctxt "task-status"
+msgid "Open"
+msgstr "未結案"
+
+#: steady/window.py:391
+msgctxt "task-status"
+msgid "Closed"
+msgstr "已結案"
+
+#: steady/window.py:393
+#, python-brace-format
+msgid ""
+"Created {created_at}\n"
+"Last updated {updated_at}"
+msgstr ""
+"建立於 {created_at}\n"
+"最近更新 {updated_at}"
+
+#: steady/window.py:393
+#, python-brace-format
+msgid ""
+"\n"
+"Closed {closed_at}"
+msgstr ""
+"\n"
+"結案於 {closed_at}"
+
+#: steady/window.py:410
+#, python-brace-format
+msgid "Due {deadline} · {text}"
+msgstr "截止於 {deadline} · {text}"
+
+#: steady/window.py:419
+#, python-brace-format
+msgid "Activity · {count}"
+msgstr "活動記錄 · {count}"
+
+#: steady/window.py:421
+msgid "No activity yet. Add a progress note."
+msgstr "尚無活動記錄，可新增一筆進度。"
+
+#: steady/window.py:421
+msgid "No activity yet. Reopen the task to add progress."
+msgstr "尚無活動記錄。重新開啟任務後可繼續新增進度。"
+
+#: steady/window.py:422
+msgid "No activity matches this filter."
+msgstr "目前篩選條件下沒有活動記錄。"
+
+#: steady/window.py:434 steady/window.py:507
+msgid "Edit Activity"
+msgstr "編輯活動記錄"
+
+#: steady/window.py:435
+msgid "Delete Activity Record"
+msgstr "刪除活動記錄"
+
+#: steady/window.py:441
+#, python-brace-format
+msgid "Edited {time}"
+msgstr "編輯於 {time}"
+
+#: steady/window.py:449
+msgid "Original Action Details"
+msgstr "原始操作資訊"
+
+#: steady/window.py:459
+#, python-brace-format
+msgid "Deadline: {time}"
+msgstr "截止時間：{time}"
+
+#: steady/window.py:466
+#, python-brace-format
+msgid ""
+"{field}\n"
+"Before: {before}\n"
+"After: {after}"
+msgstr ""
+"{field}\n"
+"原：{before}\n"
+"新：{after}"
+
+#: steady/window.py:466
+msgid "(empty)"
+msgstr "（空）"
+
+#: steady/window.py:469
+#, python-brace-format
+msgid "{action}: {title}"
+msgstr "{action}：{title}"
+
+#: steady/window.py:470
+#, python-brace-format
+msgid "Original text: {before}"
+msgstr "原內容：{before}"
+
+#: steady/window.py:506
+msgid "Activity updated"
+msgstr "活動記錄已更新"
+
+#: steady/window.py:506 steady/window.py:666
+msgid "No changes to save"
+msgstr "沒有需要儲存的修改"
+
+#: steady/window.py:507
+msgid "Only the displayed text of this record is changed, not the current task or Todo state. The original time is kept and the edit time is recorded."
+msgstr "僅修改這筆記錄的顯示內容，不更改任務或 Todo 的目前狀態。原發生時間保留，並記錄編輯時間。"
+
+#: steady/window.py:516
+msgid "Activity deleted; the task's current state is unchanged"
+msgstr "活動記錄已刪除，任務目前狀態未改變"
+
+#: steady/window.py:517
+msgid "Delete this activity?"
+msgstr "刪除這筆活動記錄？"
+
+#: steady/window.py:517
+#, python-brace-format
+msgid ""
+"{kind} · {created_at}\n"
+"\n"
+"Only this record will be deleted; the current task or Todo state will not be reverted. This cannot be undone. You can export a backup first."
+msgstr ""
+"{kind} · {created_at}\n"
+"\n"
+"僅刪除記錄，不回復任務或 Todo 的目前狀態。刪除後無法復原，可事先匯出備份。"
+
+#: steady/window.py:517
+msgid "Delete Activity"
+msgstr "刪除記錄"
+
+#: steady/window.py:532
+msgid "Task, activity history and Todo items deleted"
+msgstr "任務及其活動記錄、Todo 已刪除"
+
+#: steady/window.py:533
+msgid "Delete task?"
+msgstr "刪除任務？"
+
+#: steady/window.py:533
+#, python-brace-format
+msgid ""
+"All activity, Todo items and unsubmitted drafts for “{title}” will also be deleted.\n"
+"\n"
+"This cannot be undone. Close the task instead to keep its history, or export a backup first."
+msgstr ""
+"「{title}」的所有活動記錄、Todo 和尚未提交的草稿也會刪除。\n"
+"\n"
+"此操作無法復原；如需保留歷程，請改用結案，或先匯出備份。"
+
+#: steady/window.py:533
+msgid "Delete Task"
+msgstr "刪除任務"
+
+#: steady/window.py:537
+#, python-brace-format
+msgid "Todo List · {done} / {total}"
+msgstr "Todo 清單 · {done} / {total}"
+
+#: steady/window.py:537 steady/window.ui:85
+msgid "Todo List · Optional"
+msgstr "Todo 清單 · 選用"
+
+#: steady/window.py:564
+#, python-brace-format
+msgid "Completed {time}"
+msgstr "完成於 {time}"
+
+#: steady/window.py:604
+msgid "Todo state not saved"
+msgstr "Todo 狀態未儲存"
+
+#: steady/window.py:623
+msgid "Delete this Todo?"
+msgstr "刪除這個 Todo？"
+
+#: steady/window.py:623
+#, python-brace-format
+msgid "“{title}” will be removed from the list. Previous activity records will be kept."
+msgstr "「{title}」將從清單移除，之前的操作記錄會保留。"
+
+#: steady/window.py:655
+msgid "Task created"
+msgstr "任務已建立"
+
+#: steady/window.py:666
+msgid "Task updated and changes recorded"
+msgstr "任務已更新，修改已記錄"
+
+#: steady/window.py:676
+msgid "Unsubmitted progress"
+msgstr "還有尚未提交的進度"
+
+#: steady/window.py:676
+msgid "Add this progress note or clear the input before closing the task. Drafts will not be silently discarded."
+msgstr "請先新增這筆進度，或清空輸入框，再結案任務。草稿不會在未提示的情況下被丟棄。"
+
+#: steady/window.py:679
+msgid "Unsubmitted Todo"
+msgstr "還有尚未新增的 Todo"
+
+#: steady/window.py:679
+msgid "Add this Todo or clear the input before closing the task."
+msgstr "請先新增這個 Todo，或清空輸入框，再結案任務。"
+
+#: steady/window.py:694
+msgid "Task closed. Find it under “All”"
+msgstr "任務已結案，可在「全部」中查看"
+
+#: steady/window.py:694
+msgid "Task reopened"
+msgstr "任務已重新開啟"
+
+#: steady/window.py:708
+msgid "Progress saved"
+msgstr "進度已儲存"
+
+#: steady/window.py:718
+#, python-brace-format
+msgid "{app_name} Backup (JSON)"
+msgstr "{app_name} 備份（JSON）"
+
+#: steady/window.py:721
+msgid "All Files"
+msgstr "所有檔案"
+
+#: steady/window.py:730
+msgid "Export tasks and full history"
+msgstr "匯出任務及完整歷程"
+
+#: steady/window.py:738
+msgid "Choose a local file location"
+msgstr "請選擇本機檔案位置"
+
+#: steady/window.py:740
+msgid "Backup exported with tasks, activity and Todo items (excluding drafts)"
+msgstr "備份已匯出，包含任務、活動記錄和 Todo（不含草稿）"
+
+#: steady/window.py:743 steady/window.py:745
+msgid "Export failed"
+msgstr "匯出失敗"
+
+#: steady/window.py:752
+msgid "Handle unsubmitted drafts first"
+msgstr "請先處理尚未提交的草稿"
+
+#: steady/window.py:752
+msgid "Restoring a backup replaces your tasks. Submit or clear progress and Todo drafts for all tasks first, so they are not associated with the wrong tasks."
+msgstr "還原備份會取代任務。請先提交或清空各任務的進度和 Todo 草稿，避免草稿與還原後的任務混淆。"
+
+#: steady/window.py:754
+#, python-brace-format
+msgid "Select a {app_name} backup"
+msgstr "選擇 {app_name} 備份"
+
+#: steady/window.py:760
+msgid "Choose a local backup file"
+msgstr "請選擇本機備份檔案"
+
+#: steady/window.py:762
+msgid "Replace current tasks with this backup?"
+msgstr "用備份取代目前的任務？"
+
+#: steady/window.py:762
+#, python-brace-format
+msgid ""
+"Backup contents — Tasks: {tasks_count}; activity records: {events_count}; Todo items: {todos_count}.\n"
+"\n"
+"Existing data will be saved to the backups folder in the data directory before restoring. This replaces data; it does not merge it."
+msgstr ""
+"備份包含 {tasks_count} 項任務、{events_count} 筆活動記錄、{todos_count} 項 Todo。\n"
+"\n"
+"還原前會自動備份現有資料到資料目錄的 backups 資料夾。此操作不是合併。"
+
+#: steady/window.py:762
+msgid "Restore Backup"
+msgstr "還原備份"
+
+#: steady/window.py:765
+msgid "Restore failed"
+msgstr "還原失敗"
+
+#: steady/window.py:767
+msgid "Could not read backup"
+msgstr "無法讀取備份"
+
+#: steady/window.py:779
+msgid "Backup restored; previous data was backed up automatically"
+msgstr "備份已還原，原資料已自動備份"
+
+#: steady/window.py:786
+msgid ""
+"Ctrl+N  New task\n"
+"Ctrl+F  Search tasks and progress\n"
+"Ctrl+Enter  Add progress\n"
+"Ctrl+Q  Quit and save drafts\n"
+"\n"
+"Use the arrow keys to navigate the task list.\n"
+"Deadlines can be added, changed or removed at any time."
+msgstr ""
+"Ctrl+N　新增任務\n"
+"Ctrl+F　搜尋任務和進度\n"
+"Ctrl+Enter　新增進度\n"
+"Ctrl+Q　結束並儲存草稿\n"
+"\n"
+"任務清單可使用方向鍵導覽。\n"
+"截止時間可隨時新增、修改或移除。"
+
+#: steady/window.py:793
+msgid ""
+"Simple, offline task and progress management.\n"
+"Every step recorded, every task brought to a close."
+msgstr ""
+"簡單、離線的任務與進度管理。\n"
+"每一步都有時間，每件事都能結案。"
+
+#: steady/window.py:802
+msgid "Language saved. Quit normally and reopen Steady to apply it; your drafts will be kept."
+msgstr "語言設定已儲存。請正常結束後重新開啟 Steady，草稿將保留。"
+
+#: steady/window.py:816
+msgid "Quit anyway?"
+msgstr "仍要結束？"
+
+#: steady/window.py:816
+msgid "Some drafts could not be written to disk. Cancel and submit your progress, or quit and discard unsaved drafts."
+msgstr "部分草稿未能寫入磁碟。你可以取消結束並提交進度，或繼續結束並放棄尚未儲存的草稿。"
+
+#: steady/window.py:816
+msgid "Quit Anyway"
+msgstr "仍然結束"
+
+#: steady/window.ui:20
+msgid "Tasks"
+msgstr "任務"
+
+#: steady/window.ui:25
+msgid "See every task through"
+msgstr "讓每件事有始有終"
+
+#: steady/window.ui:26
+msgid "Main menu"
+msgstr "主選單"
+
+#: steady/window.ui:27
+msgid "New task (Ctrl+N)"
+msgstr "新增任務（Ctrl+N）"
+
+#: steady/window.ui:34
+msgid "Search tasks and progress"
+msgstr "搜尋任務和進度"
+
+#: steady/window.ui:35
+msgid "Filter by task status together with search keywords"
+msgstr "按任務狀態篩選，與搜尋關鍵字同時生效"
+
+#: steady/window.ui:35
+msgid "Task status filter"
+msgstr "任務狀態篩選"
+
+#: steady/window.ui:44
+msgid "Load More Tasks"
+msgstr "載入更多任務"
+
+#: steady/window.ui:48
+msgid "Create a task and take the first step."
+msgstr "新增一項任務，從第一步開始。"
+
+#: steady/window.ui:51
+msgid "Saved locally · Works offline"
+msgstr "本機儲存 · 無需連線"
+
+#: steady/window.ui:60 steady/window.ui:65
+msgid "Task Details"
+msgstr "任務詳細資訊"
+
+#: steady/window.ui:66
+msgid "Task actions: edit or delete"
+msgstr "任務操作：編輯或刪除"
+
+#: steady/window.ui:71
+msgid "Every step, recorded"
+msgstr "每一步，都有記錄"
+
+#: steady/window.ui:71
+msgid "Select a task to view its progress, or create your first task."
+msgstr "選擇一個任務查看進度，或建立你的第一項任務。"
+
+#: steady/window.ui:88
+msgid "Load More Todo Items"
+msgstr "載入更多 Todo"
+
+#: steady/window.ui:89
+msgid "Break tasks into small steps. Using a checklist is entirely optional."
+msgstr "將任務拆成小步驟；不用清單也可以正常推進任務。"
+
+#: steady/window.ui:91
+msgid "Add an actionable step…"
+msgstr "新增一個可執行的小步驟…"
+
+#: steady/window.ui:91
+msgid "New Todo text, Enter to add"
+msgstr "新 Todo 內容，Enter 新增"
+
+#: steady/window.ui:98
+msgid "Activity"
+msgstr "活動記錄"
+
+#: steady/window.ui:99
+msgid "Filter by activity type"
+msgstr "按活動類型篩選"
+
+#: steady/window.ui:99
+msgid "Activity type filter"
+msgstr "活動類型篩選"
+
+#: steady/window.ui:102
+msgid "No activity matches this filter"
+msgstr "目前篩選條件下沒有活動記錄"
+
+#: steady/window.ui:103
+msgid "Load Earlier Activity"
+msgstr "載入更早的記錄"
+
+#: steady/window.ui:116
+msgid "Progress note, Ctrl+Enter to save"
+msgstr "進度說明，Ctrl+Enter 儲存"
+
+#: steady/window.ui:119
+msgid "Add Progress"
+msgstr "新增進度"
+
+#: steady/window.ui:123
+msgid "This task is closed. Reopen it to add more progress."
+msgstr "任務已結案。重新開啟後可以繼續新增進度。"

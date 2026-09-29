@@ -44,9 +44,13 @@ class InstallTests(unittest.TestCase):
             result = subprocess.run([*command, "--version"], capture_output=True, text=True, check=True)
             self.assertEqual(result.stdout.strip(), f"{APP_NAME} {VERSION}")
             self.assertFalse((prefix / "bin/mtodo").exists())
-            help_result = subprocess.run([*command, "--help"], capture_output=True, text=True, check=True)
+            help_result = subprocess.run([*command, "--language", "zh_CN", "--help"], capture_output=True, text=True, check=True)
             self.assertIn("Steady — 本地任务与进展管理", help_result.stdout)
             self.assertNotIn("Mtodo", help_result.stdout)
+            for language in ("zh_CN", "zh_TW", "en", "de", "fr", "ru", "es", "ja"):
+                self.assertTrue((data_dir / "steady/locale" / language / "LC_MESSAGES/steady.mo").is_file())
+            german = subprocess.run([*command, "--language", "de", "--help"], capture_output=True, text=True, check=True)
+            self.assertIn("Lokale Aufgaben und Fortschritte", german.stdout)
             self.assertEqual(len(list((prefix / "share/applications").glob("*.desktop"))), 1)
             self.assertTrue(list((data_dir / "steady/__pycache__").glob("*.pyc")))
 

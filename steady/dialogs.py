@@ -2,6 +2,7 @@ from datetime import datetime
 
 from gi.repository import Adw, GLib, Gtk
 
+from .i18n import _, LANGUAGES, read_language
 from .timeutils import deadline_status, local_deadline, parse_timestamp
 from .widgets import confirm, label, text_editor, text_of
 
@@ -11,7 +12,7 @@ class FormDialog(Adw.Dialog):
         super().__init__(title=title, content_width=500, content_height=560, can_close=False)
         toolbar = Adw.ToolbarView()
         header = Adw.HeaderBar(show_start_title_buttons=False, show_end_title_buttons=False)
-        cancel = Gtk.Button(label="取消")
+        cancel = Gtk.Button(label=_("Cancel"))
         cancel.connect("clicked", lambda button: self._request_close())
         header.pack_start(cancel)
         self.save_button = Gtk.Button(label=action)
@@ -32,7 +33,7 @@ class FormDialog(Adw.Dialog):
 
     def _request_close(self):
         if self._signature() != self.initial:
-            confirm(self, "放弃未保存的内容？", "关闭后，本次填写的内容不会保存。", "放弃修改", self.force_close, True)
+            confirm(self, _("Discard unsaved changes?"), _("Your changes will not be saved if you close this dialog."), _("Discard Changes"), self.force_close, True)
         else:
             self.force_close()
 
@@ -43,30 +44,57 @@ class FormDialog(Adw.Dialog):
         self.save_button.set_sensitive(True)
 
 
+class LanguageDialog(FormDialog):
+    def __init__(self, directory, callback):
+        super().__init__(_("Language"), _("Save"))
+        self.set_content_height(320)
+        self.callback = callback
+        self.languages = ["auto", *dict(LANGUAGES)]
+        group = Adw.PreferencesGroup(description=_("The language will change on the next launch. Task content is not translated, and unsubmitted drafts are kept."))
+        self.language_row = Adw.ComboRow(title=_("Interface Language"), model=Gtk.StringList.new([_("System Default"), *(name for code, name in LANGUAGES)]))
+        self.language_row.set_selected(self.languages.index(read_language(directory)))
+        group.add(self.language_row)
+        self.form.append(group)
+        self.form.append(self.error_label)
+        self.initial = self._signature()
+
+    def _signature(self):
+        return self.languages[self.language_row.get_selected()]
+
+    def _save(self):
+        self.save_button.set_sensitive(False)
+        try:
+            self.callback(self._signature())
+        except Exception as error:
+            self._failed(error)
+            return
+        self.force_close()
+
+
 class TaskDialog(FormDialog):
     def __init__(self, task, callback):
-        super().__init__("编辑任务" if task else "新建任务", "保存" if task else "创建任务")
+        super().__init__(_("Edit Task") if task else _("New Task"), _("Save") if task else _("Create Task"))
         self.callback = callback
-        group = Adw.PreferencesGroup(title="任务信息")
-        self.title_row = Adw.EntryRow(title="任务标题 · 必填", text=task["title"] if task else "")
+        group = Adw.PreferencesGroup(title=_("Task Information"))
+        self.title_row = Adw.EntryRow(title=_("Task Title · Required"), text=task["title"] if task else "")
         group.add(self.title_row)
         self.form.append(group)
         description_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=8)
-        description_box.append(label("任务说明 · 可选", "heading"))
-        self.description, frame = text_editor(90, "任务说明，可选")
+        description_box.append(label(_("Task Description · Optional"), "heading"))
+        self.description, frame = text_editor(90, _("Task description, optional"))
         self.description.get_buffer().set_text(task["description"] if task else "")
         description_box.append(frame)
         self.form.append(description_box)
-        deadline_group = Adw.PreferencesGroup(title="截止时间", description="不设置也可以创建和推进任务。")
-        self.deadline_switch = Adw.SwitchRow(title="设置截止时间", subtitle="可选；未设置的任务不会显示倒计时")
+        deadline_group = Adw.PreferencesGroup(title=_("Deadline"), description=_("Tasks can be created and worked on without a deadline."))
+        self.deadline_switch = Adw.SwitchRow(title=_("Set a Deadline"), subtitle=_("Optional; tasks without a deadline have no countdown"))
         deadline_group.add(self.deadline_switch)
         self.form.append(deadline_group)
         self.deadline_fields = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
         date_group = Adw.PreferencesGroup()
-        self.date_row = Adw.EntryRow(title="日期 · YYYY-MM-DD")
+        self.date_row = Adw.EntryRow(title=_("Date · YYYY-MM-DD"))
         self.date_row.set_input_purpose(Gtk.InputPurpose.FREE_FORM)
         date_group.add(self.date_row)
-        calendar_button = Gtk.MenuButton(icon_name="x-office-calendar-symbolic", tooltip_text="选择日期", valign=Gtk.Align.CENTER)
+        calendar_button = Gtk.MenuButton(icon_name="x-office-calendar-symbolic", tooltip_text=_("Choose a date"), valign=Gtk.Align.CENTER)
         popover = Gtk.Popover()
         self.calendar = Gtk.Calendar()
         popover.set_child(self.calendar)
@@ -74,15 +102,15 @@ class TaskDialog(FormDialog):
         self.date_row.add_suffix(calendar_button)
         self.deadline_fields.append(date_group)
         time_box = Gtk.Box(spacing=10)
-        time_box.append(label("时间", "heading"))
+        time_box.append(label(_("Time"), "heading"))
         self.hour = Gtk.SpinButton.new_with_range(0, 23, 1)
         self.minute = Gtk.SpinButton.new_with_range(0, 59, 1)
         self.hour.set_numeric(True)
         self.minute.set_numeric(True)
         self.hour.set_wrap(True)
         self.minute.set_wrap(True)
-        self.hour.update_property([Gtk.AccessibleProperty.LABEL], ["截止时间：小时"])
-        self.minute.update_property([Gtk.AccessibleProperty.LABEL], ["截止时间：分钟"])
+        self.hour.update_property([Gtk.AccessibleProperty.LABEL], [_("Deadline: hour")])
+        self.minute.update_property([Gtk.AccessibleProperty.LABEL], [_("Deadline: minute")])
         time_box.append(self.hour)
         time_box.append(Gtk.Label(label=":"))
         time_box.append(self.minute)
@@ -134,9 +162,9 @@ class TaskDialog(FormDialog):
         try:
             due = self._deadline()
             text, style = deadline_status(due)
-            self.deadline_hint.set_text((text + "。") if style == "error" else "使用本地时间，默认 23:59；可随时修改或移除截止时间。")
+            self.deadline_hint.set_text(text if style == "error" else _("Local time, defaulting to 23:59. You can change or remove the deadline at any time."))
         except ValueError:
-            self.deadline_hint.set_text("日期格式示例：2026-09-29")
+            self.deadline_hint.set_text(_("Example date: 2026-09-29"))
 
     def _save(self):
         self.save_button.set_sensitive(False)
@@ -152,7 +180,7 @@ class TaskDialog(FormDialog):
 
 class TextDialog(FormDialog):
     def __init__(self, title, field, initial, callback, multiline=True, explanation=""):
-        super().__init__(title, "保存")
+        super().__init__(title, _("Save"))
         self.set_content_height(430 if multiline else 250)
         self.callback = callback
         self.multiline = multiline
@@ -185,15 +213,15 @@ class TextDialog(FormDialog):
 
 class StatusDialog(FormDialog):
     def __init__(self, task, closing, callback, pending_todos=0):
-        super().__init__("闭环任务" if closing else "重新打开任务", "确认闭环" if closing else "重新打开")
+        super().__init__(_("Close Task") if closing else _("Reopen Task"), _("Confirm Closure") if closing else _("Reopen"))
         self.set_content_height(390)
         self.callback = callback
         self.form.append(label(task["title"], "title-3"))
-        self.form.append(label("闭环后将移出未闭环列表，历史记录会完整保留。" if closing else "任务将回到未闭环列表，之前的闭环记录仍然保留。", "dim-label"))
+        self.form.append(label(_("The task will leave the open list. All history will be kept.") if closing else _("The task will return to the open list. Previous closure records will be kept."), "dim-label"))
         if closing and pending_todos:
-            self.form.append(label(f"还有 {pending_todos} 项 Todo 未完成。仍可闭环，但不会自动勾选这些项目。", "warning"))
-        self.form.append(label("闭环说明 · 可选" if closing else "重新打开说明 · 可选", "heading"))
-        self.note, frame = text_editor(110, "闭环说明" if closing else "重新打开说明")
+            self.form.append(label(_("Unfinished Todo items: {pending_todos}. You can still close this task; these items will not be checked automatically.").format(pending_todos=pending_todos), "warning"))
+        self.form.append(label(_("Closure Note · Optional") if closing else _("Reopening Note · Optional"), "heading"))
+        self.note, frame = text_editor(110, _("Closure note") if closing else _("Reopening note"))
         self.form.append(frame)
         self.form.append(self.error_label)
         self.initial = self._signature()

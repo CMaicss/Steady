@@ -14,6 +14,7 @@ Steady is a native GNOME task manager built with GTK 4 and libadwaita. Keep trac
 - Add optional deadlines and Todo checklists, with countdowns and items you can check or uncheck.
 - Filter by task status, keywords, and activity type, and reopen closed tasks.
 - Keep your data locally with no account required, automatic draft saving, and JSON backup and restore.
+- Use Simplified Chinese, Traditional Chinese, English, German, French, Russian, Spanish, or Japanese. The interface follows your system by default; select **Language…** in the main menu and restart to change it.
 
 ## Build and Run
 

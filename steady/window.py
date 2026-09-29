@@ -4,18 +4,19 @@ from pathlib import Path
 from gi.repository import Adw, Gio, GLib, Gtk, Pango
 
 from . import APP_ID, APP_NAME, VERSION
+from .i18n import _, N_, pgettext, translated_template
 from .storage import Store, atomic_json
 from .timeutils import deadline_status, format_timestamp, utc_now
 from .widgets import clear_box, confirm, error_dialog, label, text_of
 
-EVENT_LABELS = {"created": "创建任务", "updated": "修改任务", "progress": "新增进展", "closed": "任务闭环", "reopened": "重新打开", "todo": "Todo 操作"}
-FIELD_LABELS = {"title": "任务标题", "description": "任务说明", "deadline": "截止时间"}
-TASK_FILTERS = (("未闭环", "open"), ("已闭环", "closed"), ("全部", None))
-HISTORY_FILTERS = (("全部类型", None), ("仅进展", ("progress",)), ("任务修改", ("updated",)), ("创建任务", ("created",)), ("闭环 / 重开", ("closed", "reopened")), ("Todo 操作", ("todo",)))
-TODO_LABELS = {"added": "添加 Todo", "renamed": "编辑 Todo", "completed": "完成 Todo", "unchecked": "取消完成 Todo", "deleted": "删除 Todo"}
+EVENT_LABELS = {"created": N_("Create Task"), "updated": N_("Task Updated"), "progress": N_("Progress Added"), "closed": N_("Task Closed"), "reopened": N_("Reopen"), "todo": N_("Todo Actions")}
+FIELD_LABELS = {"title": N_("Task title"), "description": N_("Task description"), "deadline": N_("Deadline")}
+TASK_FILTERS = ((N_("Open"), "open"), (N_("Closed"), "closed"), (N_("All"), None))
+HISTORY_FILTERS = ((N_("All Types"), None), (N_("Progress Only"), ("progress",)), (N_("Task Updates"), ("updated",)), (N_("Create Task"), ("created",)), (N_("Close / Reopen"), ("closed", "reopened")), (N_("Todo Actions"), ("todo",)))
+TODO_LABELS = {"added": N_("Add Todo"), "renamed": N_("Edit Todo"), "completed": N_("Complete Todo"), "unchecked": N_("Uncheck Todo"), "deleted": N_("Delete Todo")}
 
 
-@Gtk.Template(filename=str(Path(__file__).with_name("window.ui")))
+@Gtk.Template(string=translated_template(Path(__file__).with_name("window.ui")))
 class MainWindow(Adw.ApplicationWindow):
     __gtype_name__ = "SteadyWindow"
 
@@ -92,6 +93,7 @@ class MainWindow(Adw.ApplicationWindow):
             "search": self.focus_search, "export": self.export_backup,
             "restore": self.restore_backup, "data-folder": self.open_data_folder,
             "shortcuts": self.show_shortcuts, "about": self.show_about,
+            "language": self.show_language,
             "quit": self.close,
         }.items():
             action = Gio.SimpleAction.new(name, None)
@@ -99,26 +101,27 @@ class MainWindow(Adw.ApplicationWindow):
             self.add_action(action)
             self.actions[name] = action
         task_menu = Gio.Menu()
-        task_menu.append("编辑任务…", "win.edit-task")
-        task_menu.append("删除任务…", "win.delete-task")
+        task_menu.append(_("Edit Task…"), "win.edit-task")
+        task_menu.append(_("Delete Task…"), "win.delete-task")
         self.edit_button.set_menu_model(task_menu)
-        self.history_filter.set_model(Gtk.StringList.new([item[0] for item in HISTORY_FILTERS]))
+        self.history_filter.set_model(Gtk.StringList.new([_(item[0]) for item in HISTORY_FILTERS]))
         selected_filter = self.state.get("history_filter", 0)
         self.history_filter.set_selected(selected_filter if type(selected_filter) is int and 0 <= selected_filter < len(HISTORY_FILTERS) else 0)
         self.history_filter.connect("notify::selected", self._history_filter_changed)
         menu = Gio.Menu()
         files = Gio.Menu()
-        files.append("导出备份…", "win.export")
-        files.append("从备份恢复…", "win.restore")
-        files.append("打开数据文件夹", "win.data-folder")
+        files.append(_("Export Backup…"), "win.export")
+        files.append(_("Restore Backup…"), "win.restore")
+        files.append(_("Open Data Folder"), "win.data-folder")
         menu.append_section(None, files)
         help_menu = Gio.Menu()
-        help_menu.append("键盘快捷键", "win.shortcuts")
-        help_menu.append(f"关于 {APP_NAME}", "win.about")
-        help_menu.append("退出", "win.quit")
+        help_menu.append(_("Language…"), "win.language")
+        help_menu.append(_("Keyboard Shortcuts"), "win.shortcuts")
+        help_menu.append(_("About {app_name}").format(app_name=APP_NAME), "win.about")
+        help_menu.append(_("Quit"), "win.quit")
         menu.append_section(None, help_menu)
         self.menu_button.set_menu_model(menu)
-        self.task_filter.set_model(Gtk.StringList.new([item[0] for item in TASK_FILTERS]))
+        self.task_filter.set_model(Gtk.StringList.new([_(item[0]) for item in TASK_FILTERS]))
         self.task_filter.connect("notify::selected", self._filter_changed)
         self.search.connect("search-changed", self._search_changed)
         self.search.connect("stop-search", lambda entry: entry.set_text(""))
@@ -141,7 +144,7 @@ class MainWindow(Adw.ApplicationWindow):
         try:
             return callback()
         except Exception as error:
-            error_dialog(self, "操作未完成", error)
+            error_dialog(self, _("Action could not be completed"), error)
             return None
 
     def _read_state(self):
@@ -151,13 +154,13 @@ class MainWindow(Adw.ApplicationWindow):
             with self.state_path.open(encoding="utf-8") as stream:
                 data = json.load(stream)
             if not isinstance(data, dict) or not isinstance(data.get("drafts", {}), dict):
-                raise ValueError("设置格式无效")
+                raise ValueError(_("Invalid settings format"))
             drafts = data.get("drafts", {})
             if any(not key.isdigit() or not isinstance(value, str) or len(value) > 50000 for key, value in drafts.items()):
-                raise ValueError("草稿格式无效")
+                raise ValueError(_("Invalid draft format"))
             todo_drafts = data.get("todo_drafts", {})
             if not isinstance(todo_drafts, dict) or any(not key.isdigit() or not isinstance(value, str) or len(value) > 500 for key, value in todo_drafts.items()):
-                raise ValueError("Todo 草稿格式无效")
+                raise ValueError(_("Invalid Todo draft format"))
             for key, default, minimum, maximum in (("width", 1080, 360, 3840), ("height", 760, 480, 2160)):
                 value = data.get(key, default)
                 data[key] = min(maximum, max(minimum, value)) if type(value) is int else default
@@ -167,8 +170,8 @@ class MainWindow(Adw.ApplicationWindow):
             try:
                 self.state_path.rename(backup)
             except OSError:
-                raise OSError(f"无法读取或保护设置文件：{self.state_path}；{error}") from error
-            GLib.idle_add(lambda: (self.toast("设置文件无法读取，原文件已保留在数据目录。"), False)[1])
+                raise OSError(_("Could not read or protect settings file: {state_path}; {error}").format(state_path=self.state_path, error=error)) from error
+            GLib.idle_add(lambda: (self.toast(_("Could not read settings. The original file was kept in the data directory.")), False)[1])
             return {}
 
     def _stash_draft(self):
@@ -193,13 +196,13 @@ class MainWindow(Adw.ApplicationWindow):
             atomic_json(self.state_path, self.state)
             self.state_error_shown = False
             if self.selected_id and text_of(self.progress_input):
-                self.draft_hint.set_text("草稿已本地保存 · Ctrl+Enter 提交")
+                self.draft_hint.set_text(_("Draft saved locally · Ctrl+Enter to submit"))
             return True
         except OSError as error:
-            self.draft_hint.set_text("草稿保存失败，请勿退出")
+            self.draft_hint.set_text(_("Draft could not be saved. Do not quit"))
             if not self.state_error_shown:
                 self.state_error_shown = True
-                error_dialog(self, "草稿／窗口状态未保存", error)
+                error_dialog(self, _("Draft / window state not saved"), error)
             return False
 
     def _draft_changed(self, buffer):
@@ -207,12 +210,12 @@ class MainWindow(Adw.ApplicationWindow):
             return
         content = text_of(self.progress_input)
         if len(content) > 50000:
-            self.draft_hint.set_text("超过 50,000 字限制，请缩短内容后保存")
+            self.draft_hint.set_text(_("Over the 50,000-character limit. Shorten the text before saving"))
             self.actions["save-progress"].set_enabled(False)
             return
         self.actions["save-progress"].set_enabled(bool(content.strip()) and bool(self.selected_task) and self.selected_task["status"] == "open")
         self.actions["add-todo"].set_enabled(bool(self.todo_input.get_text().strip()) and bool(self.selected_task) and self.selected_task["status"] == "open")
-        self.draft_hint.set_text("正在保存草稿…" if content else "Ctrl+Enter 保存进展")
+        self.draft_hint.set_text(_("Saving draft…") if content else _("Ctrl+Enter to save progress"))
         if self.draft_timer:
             GLib.source_remove(self.draft_timer)
         self.draft_timer = GLib.timeout_add(450, self._save_draft_later)
@@ -220,7 +223,7 @@ class MainWindow(Adw.ApplicationWindow):
     def _check_draft_length(self, buffer, location, text, length):
         if not self.loading_draft and buffer.get_char_count() + len(text) > 50000:
             buffer.stop_emission_by_name("insert-text")
-            self.toast("一条进展最多 50,000 字，请分多条记录")
+            self.toast(_("A progress note can contain up to 50,000 characters. Split it into several notes"))
 
     def _save_draft_later(self):
         self.draft_timer = 0
@@ -277,13 +280,13 @@ class MainWindow(Adw.ApplicationWindow):
             self.list_stack.set_visible_child_name("empty")
             query = self.search.get_text().strip()
             if query:
-                title, description = "没有找到任务", "试试其他关键词，或切换任务状态筛选。"
+                title, description = _("No tasks found"), _("Try other keywords or change the task status filter.")
             elif total == 0:
-                title, description = "还没有任务", "点击 + 创建任务。截止时间可以留空。"
+                title, description = _("No tasks yet"), _("Click + to create a task. The deadline can be left empty.")
             elif status == "closed":
-                title, description = "没有已闭环任务", "闭环后的任务会显示在这里。"
+                title, description = _("No closed tasks"), _("Closed tasks will appear here.")
             else:
-                title, description = "没有未闭环任务", "所有任务都已闭环，可以在“已闭环”或“全部”中查看。"
+                title, description = _("No open tasks"), _("All tasks are closed. Find them under “Closed” or “All”.")
             self.list_empty.set_title(title)
             self.list_empty.set_description(description)
             self.list_empty.set_icon_name("system-search-symbolic" if query else "object-select-symbolic")
@@ -303,7 +306,7 @@ class MainWindow(Adw.ApplicationWindow):
         title.set_lines(2)
         title.set_ellipsize(Pango.EllipsizeMode.END)
         box.append(title)
-        preview = task["latest_progress"] or task["description"] or "还没有进展，记录下一步。"
+        preview = task["latest_progress"] or task["description"] or _("No progress yet. Record your next step.")
         preview_label = label(" ".join(preview.split()), "dim-label")
         preview_label.set_lines(2)
         preview_label.set_ellipsize(Pango.EllipsizeMode.END)
@@ -316,7 +319,7 @@ class MainWindow(Adw.ApplicationWindow):
             details.append(label(f"Todo {task['todo_done']} / {task['todo_total']}", "caption"))
         footer.append(details)
         closed = task["status"] == "closed"
-        prefix = "闭环于" if closed else "更新于"
+        prefix = _("Closed at") if closed else _("Updated at")
         timestamp = task["closed_at"] if closed else task["updated_at"]
         separator = "\n" if task["deadline"] or task["todo_total"] or closed else " "
         row.timestamp_label = label(prefix + separator + format_timestamp(timestamp), "dim-label", wrap=False)
@@ -335,11 +338,11 @@ class MainWindow(Adw.ApplicationWindow):
         task = row.task
         text, style = deadline_status(task["deadline"], task["closed_at"])
         if task["status"] == "closed":
-            text = "已闭环" + (" · " + text if text else "")
+            text = _("Closed") + (" · " + text if text else "")
         row.deadline_label.set_text(text)
         row.deadline_label.set_visible(bool(text))
         self._status_style(row.deadline_label, style)
-        row.deadline_label.set_tooltip_text("截止于 " + format_timestamp(task["deadline"]) if task["deadline"] else "未设置截止时间")
+        row.deadline_label.set_tooltip_text(_("Due ") + format_timestamp(task["deadline"]) if task["deadline"] else _("No deadline"))
 
     @staticmethod
     def _status_style(widget, style):
@@ -379,16 +382,16 @@ class MainWindow(Adw.ApplicationWindow):
         content = text_of(self.progress_input)
         self.actions["save-progress"].set_enabled(opened and bool(content.strip()) and len(content) <= 50000)
         self.actions["add-todo"].set_enabled(opened and bool(self.todo_input.get_text().strip()))
-        self.draft_hint.set_text("已恢复本地草稿 · Ctrl+Enter 提交" if content else "Ctrl+Enter 保存进展")
+        self.draft_hint.set_text(_("Local draft restored · Ctrl+Enter to submit") if content else _("Ctrl+Enter to save progress"))
         if not task:
             return
         self.task_title.set_text(task["title"])
         self.task_description.set_text(task["description"])
         self.task_description.set_visible(bool(task["description"]))
-        self.task_status.set_text("未闭环" if opened else "已闭环")
+        self.task_status.set_text(pgettext("task-status", "Open") if opened else pgettext("task-status", "Closed"))
         self._status_style(self.task_status, "" if opened else "success")
-        self.task_meta.set_text(f"创建于 {format_timestamp(task['created_at'], True)}\n最近更新 {format_timestamp(task['updated_at'], True)}" + (f"\n闭环于 {format_timestamp(task['closed_at'], True)}" if task["closed_at"] else ""))
-        self.status_button.set_label("闭环任务" if opened else "重新打开")
+        self.task_meta.set_text(_("Created {created_at}\nLast updated {updated_at}").format(created_at=format_timestamp(task['created_at'], True), updated_at=format_timestamp(task['updated_at'], True)) + (_("\nClosed {closed_at}").format(closed_at=format_timestamp(task['closed_at'], True)) if task["closed_at"] else ""))
+        self.status_button.set_label(_("Close Task") if opened else _("Reopen"))
         self._update_detail_deadline()
         self._render_todos()
         self._render_history()
@@ -399,12 +402,12 @@ class MainWindow(Adw.ApplicationWindow):
         if not task:
             return
         if not task["deadline"]:
-            self.task_deadline.set_text("未设置截止时间")
+            self.task_deadline.set_text(_("No deadline"))
             self._status_style(self.task_deadline, "")
             self.task_deadline.add_css_class("dim-label")
         else:
             text, style = deadline_status(task["deadline"], task["closed_at"])
-            self.task_deadline.set_text(f"截止于 {format_timestamp(task['deadline'])} · {text}")
+            self.task_deadline.set_text(_("Due {deadline} · {text}").format(deadline=format_timestamp(task['deadline']), text=text))
             self.task_deadline.remove_css_class("dim-label")
             self._status_style(self.task_deadline, style)
 
@@ -413,10 +416,10 @@ class MainWindow(Adw.ApplicationWindow):
         kinds = HISTORY_FILTERS[self.history_filter.get_selected()][1]
         count = self.store.event_count(self.selected_id, kinds)
         total = self.store.event_count(self.selected_id)
-        self.history_heading.set_text(f"活动记录 · {count}" + (f" / {total}" if kinds is not None else ""))
+        self.history_heading.set_text(_("Activity · {count}").format(count=count) + (f" / {total}" if kinds is not None else ""))
         self.history_empty.set_visible(count == 0)
-        empty_text = "尚无活动记录，可添加一条进展。" if self.selected_task["status"] == "open" else "尚无活动记录。重新打开任务后可继续添加进展。"
-        self.history_empty.set_text(empty_text if kinds is None else "当前筛选下没有活动记录。")
+        empty_text = _("No activity yet. Add a progress note.") if self.selected_task["status"] == "open" else _("No activity yet. Reopen the task to add progress.")
+        self.history_empty.set_text(empty_text if kinds is None else _("No activity matches this filter."))
         self.history_list.set_visible(count > 0)
         self.more_events.set_visible(count > self.event_limit)
         for event in self.store.events(self.selected_id, self.event_limit, kinds):
@@ -425,17 +428,17 @@ class MainWindow(Adw.ApplicationWindow):
             box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=7)
             box.add_css_class("event-row")
             header = Gtk.Box(spacing=4)
-            heading = label(EVENT_LABELS[event["kind"]], "heading")
+            heading = label(_(EVENT_LABELS[event["kind"]]), "heading")
             heading.set_hexpand(True)
             header.append(heading)
-            row.edit_button = self._icon_button("document-edit-symbolic", "编辑活动记录", lambda event_id=event["id"]: self.edit_event(event_id))
-            row.delete_button = self._icon_button("user-trash-symbolic", "删除活动记录", lambda event_id=event["id"]: self.delete_event(event_id))
+            row.edit_button = self._icon_button("document-edit-symbolic", _("Edit Activity"), lambda event_id=event["id"]: self.edit_event(event_id))
+            row.delete_button = self._icon_button("user-trash-symbolic", _("Delete Activity Record"), lambda event_id=event["id"]: self.delete_event(event_id))
             header.append(row.edit_button)
             header.append(row.delete_button)
             box.append(header)
             stamp_text = format_timestamp(event["created_at"], True)
             if event["edited_at"]:
-                stamp_text += "\n编辑于 " + format_timestamp(event["edited_at"], True)
+                stamp_text += "\n" + _("Edited {time}").format(time=format_timestamp(event["edited_at"], True))
             stamp = label(stamp_text, "dim-label", selectable=True)
             stamp.add_css_class("caption")
             box.append(stamp)
@@ -443,7 +446,7 @@ class MainWindow(Adw.ApplicationWindow):
             if body:
                 box.append(label(body, selectable=True))
             if event["edited_at"] and event["kind"] in ("created", "updated", "todo"):
-                original = Gtk.Expander(label="原始操作信息")
+                original = Gtk.Expander(label=_("Original Action Details"))
                 original.set_child(label(self._original_event_text(event), "dim-label", selectable=True))
                 box.append(original)
             row.set_child(box)
@@ -453,17 +456,18 @@ class MainWindow(Adw.ApplicationWindow):
     def _original_event_text(event):
         changes = event["changes"]
         if event["kind"] == "created":
-            return "\n".join(value for value in (changes["title"], changes["description"], "截止时间：" + format_timestamp(changes["deadline"])) if value)
+            return "\n".join(value for value in (changes["title"], changes["description"], _("Deadline: {time}").format(time=format_timestamp(changes["deadline"]))) if value)
         if event["kind"] == "updated":
             lines = []
             for key, change in changes.items():
                 before, after = change["before"], change["after"]
                 if key == "deadline":
                     before, after = format_timestamp(before), format_timestamp(after)
-                lines.append(f"{FIELD_LABELS[key]}\n原：{before or '（空）'}\n新：{after or '（空）'}")
+                lines.append(_("{field}\nBefore: {before}\nAfter: {after}").format(field=_(FIELD_LABELS[key]), before=before or _("(empty)"), after=after or _("(empty)")))
             return "\n\n".join(lines)
         if event["kind"] == "todo":
-            return TODO_LABELS[changes["action"]] + "：" + changes["title"] + ("\n原内容：" + changes["before"] if "before" in changes else "")
+            text = _("{action}: {title}").format(action=_(TODO_LABELS[changes["action"]]), title=changes["title"])
+            return text + ("\n" + _("Original text: {before}").format(before=changes["before"]) if "before" in changes else "")
         return event["content"]
 
     def _event_text(self, event):
@@ -499,8 +503,8 @@ class MainWindow(Adw.ApplicationWindow):
             if changed:
                 self.store.edit_event(event_id, content)
                 self._refresh_after_mutation(event["task_id"])
-            self.toast("活动记录已更新" if changed else "没有需要保存的修改")
-        self._present_form(TextDialog("编辑活动记录", EVENT_LABELS[event["kind"]], initial, save, explanation="仅修改这条记录的显示内容，不更改任务或 Todo 的当前状态。原发生时间保留，并记录编辑时间。"))
+            self.toast(_("Activity updated") if changed else _("No changes to save"))
+        self._present_form(TextDialog(_("Edit Activity"), _(EVENT_LABELS[event["kind"]]), initial, save, explanation=_("Only the displayed text of this record is changed, not the current task or Todo state. The original time is kept and the edit time is recorded.")))
 
     def delete_event(self, event_id):
         if self.active_form:
@@ -509,8 +513,8 @@ class MainWindow(Adw.ApplicationWindow):
         def remove():
             self.store.delete_event(event_id)
             self._refresh_after_mutation(event["task_id"])
-            self.toast("活动记录已删除，任务当前状态未改变")
-        return confirm(self, "删除这条活动记录？", f"{EVENT_LABELS[event['kind']]} · {format_timestamp(event['created_at'], True)}\n\n仅删除记录，不回滚任务或 Todo 的当前状态。删除后无法撤销，可事先导出备份。", "删除记录", lambda: self._run(remove), True)
+            self.toast(_("Activity deleted; the task's current state is unchanged"))
+        return confirm(self, _("Delete this activity?"), _("{kind} · {created_at}\n\nOnly this record will be deleted; the current task or Todo state will not be reverted. This cannot be undone. You can export a backup first.").format(kind=_(EVENT_LABELS[event['kind']]), created_at=format_timestamp(event['created_at'], True)), _("Delete Activity"), lambda: self._run(remove), True)
 
     def delete_task(self):
         if self.active_form or not self.selected_task:
@@ -525,12 +529,12 @@ class MainWindow(Adw.ApplicationWindow):
             self.selected_task = None
             self.refresh()
             self._write_state()
-            self.toast("任务及其活动记录、Todo 已删除")
-        return confirm(self, "删除任务？", f"“{task['title']}”的所有活动记录、Todo 和未提交草稿也会删除。\n\n此操作无法撤销；如需保留历史，请改用闭环，或先导出备份。", "删除任务", lambda: self._run(remove), True)
+            self.toast(_("Task, activity history and Todo items deleted"))
+        return confirm(self, _("Delete task?"), _("All activity, Todo items and unsubmitted drafts for “{title}” will also be deleted.\n\nThis cannot be undone. Close the task instead to keep its history, or export a backup first.").format(title=task['title']), _("Delete Task"), lambda: self._run(remove), True)
 
     def _render_todos(self):
         done, total = self.store.todo_counts(self.selected_id)
-        self.todo_expander.set_label(f"Todo 清单 · {done} / {total}" if total else "Todo 清单 · 可选")
+        self.todo_expander.set_label(_("Todo List · {done} / {total}").format(done=done, total=total) if total else _("Todo List · Optional"))
         if self.todo_task_id != self.selected_id:
             self.todo_task_id = self.selected_id
             self.todo_expander.set_expanded(bool(total or self.todo_input.get_text()))
@@ -557,12 +561,12 @@ class MainWindow(Adw.ApplicationWindow):
                 title.set_attributes(attributes)
             texts.append(title)
             if todo["completed_at"]:
-                stamp = label("完成于 " + format_timestamp(todo["completed_at"]), "dim-label")
+                stamp = label(_("Completed {time}").format(time=format_timestamp(todo["completed_at"])), "dim-label")
                 stamp.add_css_class("caption")
                 texts.append(stamp)
             row.check_button.set_child(texts)
-            row.edit_button = self._icon_button("document-edit-symbolic", "编辑 Todo", lambda todo_id=todo["id"]: self.edit_todo(todo_id))
-            row.delete_button = self._icon_button("user-trash-symbolic", "删除 Todo", lambda todo_id=todo["id"]: self.delete_todo(todo_id))
+            row.edit_button = self._icon_button("document-edit-symbolic", _("Edit Todo"), lambda todo_id=todo["id"]: self.edit_todo(todo_id))
+            row.delete_button = self._icon_button("user-trash-symbolic", _("Delete Todo"), lambda todo_id=todo["id"]: self.delete_todo(todo_id))
             row.edit_button.set_visible(opened)
             row.delete_button.set_visible(opened)
             box.append(row.edit_button)
@@ -597,7 +601,7 @@ class MainWindow(Adw.ApplicationWindow):
                 button.set_active(bool(todo["completed"]))
             finally:
                 self.resetting_todo = False
-            error_dialog(self, "Todo 状态未保存", error)
+            error_dialog(self, _("Todo state not saved"), error)
 
     def edit_todo(self, todo_id):
         if self.active_form:
@@ -607,7 +611,7 @@ class MainWindow(Adw.ApplicationWindow):
         def save(title):
             self.store.rename_todo(todo_id, title)
             self._refresh_after_mutation(todo["task_id"])
-        self._present_form(TextDialog("编辑 Todo", "Todo 内容", todo["title"], save, multiline=False))
+        self._present_form(TextDialog(_("Edit Todo"), _("Todo text"), todo["title"], save, multiline=False))
 
     def delete_todo(self, todo_id):
         if self.active_form:
@@ -616,7 +620,7 @@ class MainWindow(Adw.ApplicationWindow):
         def remove():
             self.store.delete_todo(todo_id)
             self._refresh_after_mutation(todo["task_id"])
-        return confirm(self, "删除这个 Todo？", f"“{todo['title']}”将从清单移除，之前的操作记录会保留。", "删除 Todo", lambda: self._run(remove), True)
+        return confirm(self, _("Delete this Todo?"), _("“{title}” will be removed from the list. Previous activity records will be kept.").format(title=todo['title']), _("Delete Todo"), lambda: self._run(remove), True)
 
     def _tick(self):
         if self.get_mapped():
@@ -648,7 +652,7 @@ class MainWindow(Adw.ApplicationWindow):
             self.refresh(task_id)
             self.split.set_show_content(True)
             self._write_state()
-            self.toast("任务已创建")
+            self.toast(_("Task created"))
         self._present_form(TaskDialog(None, create))
 
     def edit_task(self):
@@ -659,7 +663,7 @@ class MainWindow(Adw.ApplicationWindow):
         def update(title, description, deadline):
             changed = self.store.update_task(task_id, title, description, deadline)
             self.refresh(task_id)
-            self.toast("任务已更新，修改已记录" if changed else "没有需要保存的修改")
+            self.toast(_("Task updated and changes recorded") if changed else _("No changes to save"))
         self._present_form(TaskDialog(self.selected_task, update))
 
     def change_status(self):
@@ -669,10 +673,10 @@ class MainWindow(Adw.ApplicationWindow):
         task_id = self.selected_id
         closing = self.selected_task["status"] == "open"
         if closing and text_of(self.progress_input).strip():
-            error_dialog(self, "还有未提交的进展", "请先添加这条进展，或清空输入框，再闭环任务。草稿不会被静默丢弃。")
+            error_dialog(self, _("Unsubmitted progress"), _("Add this progress note or clear the input before closing the task. Drafts will not be silently discarded."))
             return
         if closing and self.todo_input.get_text().strip():
-            error_dialog(self, "还有未添加的 Todo", "请先添加这个 Todo，或清空输入框，再闭环任务。")
+            error_dialog(self, _("Unsubmitted Todo"), _("Add this Todo or clear the input before closing the task."))
             return
         def change(note):
             if closing:
@@ -687,7 +691,7 @@ class MainWindow(Adw.ApplicationWindow):
             self.todo_drafts.pop(str(task_id), None)
             self.refresh(task_id)
             self._write_state()
-            self.toast("任务已闭环，可在“全部”中查看" if closing else "任务已重新打开")
+            self.toast(_("Task closed. Find it under “All”") if closing else _("Task reopened"))
         done, total = self.store.todo_counts(task_id)
         self._present_form(StatusDialog(self.selected_task, closing, change, total - done))
 
@@ -701,7 +705,7 @@ class MainWindow(Adw.ApplicationWindow):
         self.refresh(task_id)
         self._write_state()
         self.progress_input.grab_focus()
-        self.toast("进展已保存")
+        self.toast(_("Progress saved"))
 
     def focus_search(self):
         if not self.active_form:
@@ -711,10 +715,10 @@ class MainWindow(Adw.ApplicationWindow):
     def _file_dialog(self, title):
         dialog = Gtk.FileDialog(title=title, modal=True)
         filters = Gio.ListStore.new(Gtk.FileFilter)
-        file_filter = Gtk.FileFilter(name=f"{APP_NAME} 备份（JSON）")
+        file_filter = Gtk.FileFilter(name=_("{app_name} Backup (JSON)").format(app_name=APP_NAME))
         file_filter.add_pattern("*.json")
         filters.append(file_filter)
-        all_files = Gtk.FileFilter(name="所有文件")
+        all_files = Gtk.FileFilter(name=_("All Files"))
         all_files.add_pattern("*")
         filters.append(all_files)
         dialog.set_filters(filters)
@@ -723,7 +727,7 @@ class MainWindow(Adw.ApplicationWindow):
     def export_backup(self):
         if self.active_form:
             return
-        dialog = self._file_dialog("导出任务及完整历史")
+        dialog = self._file_dialog(_("Export tasks and full history"))
         dialog.set_initial_name(f"{APP_NAME.lower()}-backup-{utc_now()[:10]}.json")
         dialog.save(self, None, self._export_selected)
 
@@ -731,36 +735,36 @@ class MainWindow(Adw.ApplicationWindow):
         try:
             file = dialog.save_finish(result)
             if not file.get_path():
-                raise ValueError("请选择本地文件位置")
+                raise ValueError(_("Choose a local file location"))
             self.store.export_backup(file.get_path())
-            self.toast("备份已导出，包含任务、活动记录和 Todo（不含草稿）")
+            self.toast(_("Backup exported with tasks, activity and Todo items (excluding drafts)"))
         except GLib.Error as error:
             if not error.matches(Gtk.dialog_error_quark(), Gtk.DialogError.DISMISSED):
-                error_dialog(self, "导出失败", error)
+                error_dialog(self, _("Export failed"), error)
         except Exception as error:
-            error_dialog(self, "导出失败", error)
+            error_dialog(self, _("Export failed"), error)
 
     def restore_backup(self):
         if self.active_form:
             return
         self._write_state()
         if any(value.strip() for value in (*self.drafts.values(), *self.todo_drafts.values())):
-            error_dialog(self, "请先处理未提交的草稿", "恢复备份会替换任务。请先提交或清空各任务的进展和 Todo 草稿，避免草稿与恢复后的任务混淆。")
+            error_dialog(self, _("Handle unsubmitted drafts first"), _("Restoring a backup replaces your tasks. Submit or clear progress and Todo drafts for all tasks first, so they are not associated with the wrong tasks."))
             return
-        self._file_dialog(f"选择 {APP_NAME} 备份").open(self, None, self._restore_selected)
+        self._file_dialog(_("Select a {app_name} backup").format(app_name=APP_NAME)).open(self, None, self._restore_selected)
 
     def _restore_selected(self, dialog, result):
         try:
             file = dialog.open_finish(result)
             if not file.get_path():
-                raise ValueError("请选择本地备份文件")
+                raise ValueError(_("Choose a local backup file"))
             data = Store.read_backup(file.get_path())
-            confirm(self, "用备份替换当前任务？", f"备份包含 {len(data['tasks'])} 项任务、{len(data['events'])} 条活动记录、{len(data['todos'])} 项 Todo。\n\n恢复前会自动备份现有数据到数据目录的 backups 文件夹。此操作不是合并。", "恢复备份", lambda: self._run(lambda: self._restore(data)), True)
+            confirm(self, _("Replace current tasks with this backup?"), _("Backup contents — Tasks: {tasks_count}; activity records: {events_count}; Todo items: {todos_count}.\n\nExisting data will be saved to the backups folder in the data directory before restoring. This replaces data; it does not merge it.").format(tasks_count=len(data['tasks']), events_count=len(data['events']), todos_count=len(data['todos'])), _("Restore Backup"), lambda: self._run(lambda: self._restore(data)), True)
         except GLib.Error as error:
             if not error.matches(Gtk.dialog_error_quark(), Gtk.DialogError.DISMISSED):
-                error_dialog(self, "恢复失败", error)
+                error_dialog(self, _("Restore failed"), error)
         except Exception as error:
-            error_dialog(self, "无法读取备份", error)
+            error_dialog(self, _("Could not read backup"), error)
 
     def _restore(self, data):
         backup_path = self.store.restore_backup(data)
@@ -772,22 +776,31 @@ class MainWindow(Adw.ApplicationWindow):
         self.task_filter.set_selected(0)
         self.refresh()
         self._write_state()
-        self.toast("备份已恢复，原数据已自动备份")
+        self.toast(_("Backup restored; previous data was backed up automatically"))
         return backup_path
 
     def open_data_folder(self):
         Gio.AppInfo.launch_default_for_uri(self.store.path.parent.as_uri(), None)
 
     def show_shortcuts(self):
-        dialog = Adw.AlertDialog(heading="键盘快捷键", body="Ctrl+N　新建任务\nCtrl+F　搜索任务和进展\nCtrl+Enter　添加进展\nCtrl+Q　退出并保存草稿\n\n任务列表可使用方向键导航。\n截止时间可随时添加、修改或移除。")
-        dialog.add_response("ok", "知道了")
+        dialog = Adw.AlertDialog(heading=_("Keyboard Shortcuts"), body=_("Ctrl+N  New task\nCtrl+F  Search tasks and progress\nCtrl+Enter  Add progress\nCtrl+Q  Quit and save drafts\n\nUse the arrow keys to navigate the task list.\nDeadlines can be added, changed or removed at any time."))
+        dialog.add_response("ok", _("OK"))
         dialog.set_default_response("ok")
         dialog.set_close_response("ok")
         dialog.present(self)
 
     def show_about(self):
-        dialog = Adw.AboutDialog(application_name=APP_NAME, application_icon=APP_ID, version=VERSION, comments="简单、离线的任务与进展管理。\n每一步都有时间，每件事都能闭环。", developer_name=APP_NAME)
+        dialog = Adw.AboutDialog(application_name=APP_NAME, application_icon=APP_ID, version=VERSION, comments=_("Simple, offline task and progress management.\nEvery step recorded, every task brought to a close."), developer_name=APP_NAME)
         dialog.present(self)
+
+    def show_language(self):
+        if self.active_form:
+            return
+        from .dialogs import LanguageDialog
+        def save(language):
+            atomic_json(self.store.path.parent / "language.json", {"language": language})
+            self.toast(_("Language saved. Quit normally and reopen Steady to apply it; your drafts will be kept."))
+        self._present_form(LanguageDialog(self.store.path.parent, save))
 
     def _close_requested(self, window):
         if self.active_form:
@@ -800,7 +813,7 @@ class MainWindow(Adw.ApplicationWindow):
             def discard():
                 self.discard_on_exit = True
                 self.close()
-            confirm(self, "仍要退出？", "部分草稿未能写入磁盘。你可以取消退出并提交进展，或继续退出并放弃未保存的草稿。", "仍然退出", discard, True)
+            confirm(self, _("Quit anyway?"), _("Some drafts could not be written to disk. Cancel and submit your progress, or quit and discard unsaved drafts."), _("Quit Anyway"), discard, True)
             return True
         if self.refresh_timer:
             GLib.source_remove(self.refresh_timer)

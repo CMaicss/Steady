@@ -5,7 +5,7 @@
 ## 项目与结构
 
 - Steady 是离线、单用户的 GNOME 原生任务管理应用，使用 Python ≥ 3.10、PyGObject、GTK ≥ 4.12 和 libadwaita ≥ 1.5。
-- 应用名为 `Steady`，Python 包和命令为 `steady`，应用标识为 `io.github.steady.Steady`；界面与用户文档使用中文。
+- 应用名为 `Steady`，Python 包和命令为 `steady`，应用标识为 `io.github.steady.Steady`；名称不翻译，界面支持八种语言，文档保持简洁。
 - `steady/storage.py` 管理 SQLite、业务校验、备份和恢复；数据约束放在这里，不只依赖界面校验。
 - `steady/window.ui` 定义主窗口，`steady/window.py` 负责交互，`steady/dialogs.py` 与 `steady/widgets.py` 提供对话框和公共控件。
 - `steady/application.py` 管理生命周期，`steady/timeutils.py` 处理时间，`tools/install.py` 负责用户级安装与旧版迁移。
@@ -28,6 +28,17 @@
 - 保持 GTK 主线程响应，不在启动阶段引入联网、长时间阻塞或不必要的导入。需要时延迟加载对话框。
 - 界面跟随系统主题，兼顾窄窗口、键盘操作和可访问性；状态不能只靠颜色表达。
 - 不引入云同步、账号、遥测或后台常驻，除非用户明确要求。
+
+## 国际化
+
+- 使用 Python 标准库 gettext，英文为源文案和缺失翻译的回退；翻译源文件在 `po/`，预编译目录在 `steady/locale/`，运行和安装无需额外 gettext 依赖。
+- 所有应用界面、错误、工具提示和可访问性文案使用 `_()`；模块级枚举用 `N_()` 标记、显示时再翻译。动态内容使用命名占位符并在翻译后 `.format()`；数量使用 `ngettext()`，单任务状态等语境差异使用 `pgettext()`，不得先拼接或格式化再翻译。
+- GtkBuilder 中标记 `translatable="yes"`；由 `translated_template()` 使用同一目录翻译，避免 C/C.UTF-8 或未安装系统 locale 时模板与 Python 文案语言不一致。系统文件选择器及工具包自带菜单仍由桌面环境提供翻译。
+- 保持 `zh_CN`、`zh_TW`、`en`、`de`、`fr`、`ru`、`es`、`ja` 完整，新增文案同步全部语言并检查占位符与复数形式；桌面入口和 AppStream 的本地化简介同步维护。
+- 安装开发工具 GNU gettext 后，运行 `/usr/bin/python3 tools/translations.py --update` 提取、合并并编译；编辑 `.po` 后运行 `/usr/bin/python3 tools/translations.py`。提交 `.po`、`.pot` 及更新后的 `.mo`，不能仅改二进制目录。
+- 语言优先级：`--language` > `STEADY_LANGUAGE` > 数据目录内 `language.json` > 系统语言；`auto` 跟随系统。主菜单选择下次启动生效，不强制退出，不丢弃草稿。测试必须在导入主窗口前选择语言。
+- 不翻译用户输入、数据库字段、状态键、历史快照或备份格式；时间仍以 UTC 保存、本地时区显示，日期输入仍为 `YYYY-MM-DD`。新增语言不需要数据迁移。
+- 运行 `/usr/bin/python3 tools/check_i18n_ui.py --screenshots .artifacts/i18n` 验证八种语言、C.UTF-8 环境、明暗主题、窄窗口及语言设置保存；翻译仍欢迎母语使用者校对。
 
 ## 数据与兼容性
 

@@ -253,6 +253,12 @@ class StoreTests(unittest.TestCase):
 
 
 class TimeTests(unittest.TestCase):
+    def setUp(self):
+        from steady import i18n
+        previous = i18n.translation
+        i18n.configure("zh_CN")
+        self.addCleanup(setattr, i18n, "translation", previous)
+
     def test_deadline_boundaries(self):
         now = datetime(2026, 9, 29, 12, tzinfo=timezone.utc)
         cases = [

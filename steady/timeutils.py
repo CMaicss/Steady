@@ -1,6 +1,7 @@
 import math
 from datetime import datetime, timezone
 
+from .i18n import _, ngettext
 
 def utc_now():
     return datetime.now(timezone.utc).isoformat(timespec="microseconds")
@@ -8,10 +9,10 @@ def utc_now():
 
 def parse_timestamp(value):
     if not isinstance(value, str):
-        raise ValueError("时间必须为带时区的 ISO 8601 字符串")
+        raise ValueError(_("Time must be an ISO 8601 string with a time zone"))
     result = datetime.fromisoformat(value)
     if result.tzinfo is None or result.utcoffset() is None:
-        raise ValueError("时间缺少时区")
+        raise ValueError(_("Time zone is missing"))
     return result
 
 
@@ -26,15 +27,15 @@ def local_deadline(date_text, hour, minute):
         )
         localized = selected.astimezone()
         if localized.replace(tzinfo=None) != selected:
-            raise ValueError("所选时间因夏令时切换而不存在，请选择其他时间")
+            raise ValueError(_("This time does not exist due to a daylight-saving transition. Choose another time"))
         return localized.astimezone(timezone.utc).isoformat(timespec="microseconds")
     except (ValueError, OverflowError) as error:
-        raise ValueError("请输入有效日期（YYYY-MM-DD）和时间；夏令时跳过的时间不可选") from error
+        raise ValueError(_("Enter a valid date (YYYY-MM-DD) and time; times skipped by daylight saving are not allowed")) from error
 
 
 def format_timestamp(value, seconds=False):
     if not value:
-        return "未设置"
+        return _("Not set")
     pattern = "%Y-%m-%d %H:%M:%S" if seconds else "%Y-%m-%d %H:%M"
     return parse_timestamp(value).astimezone().strftime(pattern)
 
@@ -44,20 +45,24 @@ def deadline_status(deadline, closed_at=None, now=None):
         return "", ""
     due = parse_timestamp(deadline)
     if closed_at:
-        return ("按时闭环", "success") if parse_timestamp(closed_at) <= due else ("逾期闭环", "warning")
+        return (_("Closed on time"), "success") if parse_timestamp(closed_at) <= due else (_("Closed late"), "warning")
     remaining = (due - (now or datetime.now(timezone.utc))).total_seconds()
     if 0 < remaining < 60:
-        return "即将到期", "warning"
+        return _("Due soon"), "warning"
     overdue = remaining <= 0
     minutes = max(1, math.floor(abs(remaining) / 60) if overdue else math.ceil(remaining / 60))
     days, rest = divmod(minutes, 1440)
     hours, minutes = divmod(rest, 60)
     if days:
-        duration = f"{days} 天" + (f" {hours} 小时" if hours else "")
+        duration = ngettext("{count} day", "{count} days", days).format(count=days)
+        if hours:
+            duration += " " + ngettext("{count} hour", "{count} hours", hours).format(count=hours)
     elif hours:
-        duration = f"{hours} 小时" + (f" {minutes} 分钟" if minutes else "")
+        duration = ngettext("{count} hour", "{count} hours", hours).format(count=hours)
+        if minutes:
+            duration += " " + ngettext("{count} minute", "{count} minutes", minutes).format(count=minutes)
     else:
-        duration = f"{minutes} 分钟"
+        duration = ngettext("{count} minute", "{count} minutes", minutes).format(count=minutes)
     if overdue and remaining > -60:
-        return "已到期" if remaining == 0 else "已逾期不足 1 分钟", "error"
-    return (f"已逾期 {duration}", "error") if overdue else (f"剩余 {duration}", "warning" if remaining < 86400 else "")
+        return _("Due now") if remaining == 0 else _("Less than 1 minute overdue"), "error"
+    return (_("Overdue by {duration}").format(duration=duration), "error") if overdue else (_("{duration} left").format(duration=duration), "warning" if remaining < 86400 else "")
