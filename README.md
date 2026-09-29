@@ -1,10 +1,14 @@
 # Steady
 
-![Steady 应用界面](docs/steady.png)
+**简体中文** | [English](README.en.md)
+
+<img src="steady/icons/hicolor/scalable/apps/io.github.steady.Steady.svg" alt="Steady Logo" width="128" height="128">
 
 ## 概述
 
 Steady 是一款基于 GTK 4 和 libadwaita 的 GNOME 原生任务管理应用，记录任务从开始、推进到闭环的每一步。
+
+![Steady 中文界面](docs/steady.png)
 
 - 创建、编辑、删除任务，随时记录和管理带时间的进展。
 - 可选截止时间与 Todo 清单，支持倒计时、勾选和取消勾选。
