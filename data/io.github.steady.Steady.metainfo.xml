@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>io.github.steady.Steady</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <name>Steady</name>
+  <summary>Keep local tasks and their progress until closure</summary>
+  <summary xml:lang="zh_CN">本地记录任务与每一步进展，直到闭环</summary>
+  <description>
+    <p>Steady is an offline task manager for the GNOME desktop. Create tasks with optional deadlines, append timestamped progress, and close or reopen tasks without losing their history.</p>
+    <p>Break tasks into optional checklists, edit or delete activity records, and filter history by type. Search tasks and progress, keep local drafts, and export or restore complete backups. No account or server is required.</p>
+  </description>
+  <launchable type="desktop-id">io.github.steady.Steady.desktop</launchable>
+  <content_rating type="oars-1.1"/>
+  <releases>
+    <release version="1.2.0" date="2026-09-29">
+      <description><p>Unify package names, application identifiers, filenames and directories under Steady, migrate existing native installations, and retain support for legacy backups.</p></description>
+    </release>
+    <release version="1.1.1" date="2026-09-29">
+      <description><p>Rename the application to Steady while preserving existing data and backups. Place the task status filter next to search and task closure in the content area.</p></description>
+    </release>
+    <release version="1.1.0" date="2026-09-29">
+      <description><p>Add task deletion, activity editing and deletion, history filters, and optional Todo checklists. Existing data is backed up before the database upgrade.</p></description>
+    </release>
+    <release version="1.0.1" date="2026-09-29"/>
+    <release version="1.0.0" date="2026-09-29"/>
+  </releases>
+  <supports><control>pointing</control><control>keyboard</control><control>touch</control></supports>
+</component>

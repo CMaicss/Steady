@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+build/
+.flatpak-build/
+.flatpak-builder/
+.artifacts/
+*.sqlite3
+*.sqlite3-wal
+*.sqlite3-shm
+state.json
+backups/
+.venv/
+.env
+.env.*
+!.env.example

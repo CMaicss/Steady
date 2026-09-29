@@ -1,0 +1,13 @@
+[Desktop Entry]
+Type=Application
+Name=Steady
+Name[zh_CN]=Steady
+Comment=Local tasks and progress, from start to closure
+Comment[zh_CN]=本地任务与进展管理，让每件事有始有终
+Exec=@EXEC@
+Icon=io.github.steady.Steady
+Terminal=false
+Categories=Office;ProjectManagement;GTK;
+Keywords=tasks;todo;progress;deadline;任务;进展;闭环;
+StartupNotify=true
+DBusActivatable=true

@@ -1,0 +1,4 @@
+.task-row { padding: 12px; }
+.event-row { padding: 14px 16px; }
+.todo-row { padding: 10px 12px; }
+.deadline-badge { font-size: 0.9em; font-weight: 600; }

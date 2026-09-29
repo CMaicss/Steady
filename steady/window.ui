@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.12"/>
+  <requires lib="Adw" version="1.5"/>
+  <template class="SteadyWindow" parent="AdwApplicationWindow">
+    <property name="title">Steady</property>
+    <property name="default-width">1080</property>
+    <property name="default-height">760</property>
+    <property name="width-request">360</property>
+    <property name="height-request">480</property>
+    <property name="content">
+      <object class="AdwToastOverlay" id="toast_overlay">
+        <property name="child">
+          <object class="AdwNavigationSplitView" id="split">
+            <property name="min-sidebar-width">300</property>
+            <property name="max-sidebar-width">380</property>
+            <property name="sidebar-width-fraction">0.34</property>
+            <property name="sidebar">
+              <object class="AdwNavigationPage">
+                <property name="title">任务</property>
+                <property name="child">
+                  <object class="AdwToolbarView">
+                    <child type="top">
+                      <object class="AdwHeaderBar">
+                        <property name="title-widget"><object class="AdwWindowTitle"><property name="title">Steady</property><property name="subtitle">让每件事有始有终</property></object></property>
+                        <child type="start"><object class="GtkMenuButton" id="menu_button"><property name="icon-name">open-menu-symbolic</property><property name="tooltip-text">主菜单</property></object></child>
+                        <child type="end"><object class="GtkButton" id="new_button"><property name="icon-name">list-add-symbolic</property><property name="tooltip-text">新建任务（Ctrl+N）</property><property name="action-name">win.new-task</property><style><class name="suggested-action"/></style></object></child>
+                      </object>
+                    </child>
+                    <property name="content">
+                      <object class="GtkBox">
+                        <property name="orientation">vertical</property>
+                        <child><object class="GtkBox"><property name="spacing">8</property><property name="margin-start">12</property><property name="margin-end">12</property><property name="margin-top">8</property><property name="margin-bottom">8</property>
+                          <child><object class="GtkSearchEntry" id="search"><property name="placeholder-text">搜索任务和进展</property><property name="hexpand">true</property><property name="width-chars">8</property><property name="valign">center</property></object></child>
+                          <child><object class="GtkDropDown" id="task_filter"><property name="halign">end</property><property name="valign">center</property><property name="tooltip-text">按任务状态筛选，与搜索关键词同时生效</property><accessibility><property name="label">任务状态筛选</property></accessibility></object></child>
+                        </object></child>
+                        <child>
+                          <object class="GtkStack" id="list_stack">
+                            <property name="vexpand">true</property>
+                            <child><object class="GtkStackPage"><property name="name">tasks</property><property name="child">
+                              <object class="GtkScrolledWindow" id="list_scroll"><property name="hscrollbar-policy">never</property><property name="child">
+                                <object class="GtkBox"><property name="orientation">vertical</property>
+                                  <child><object class="GtkListBox" id="task_list"><property name="selection-mode">single</property><style><class name="navigation-sidebar"/></style></object></child>
+                                  <child><object class="GtkButton" id="more_tasks"><property name="label">加载更多任务</property><property name="margin-start">12</property><property name="margin-end">12</property><property name="margin-bottom">12</property><style><class name="flat"/></style></object></child>
+                                </object>
+                              </property></object>
+                            </property></object></child>
+                            <child><object class="GtkStackPage"><property name="name">empty</property><property name="child"><object class="AdwStatusPage" id="list_empty"><property name="icon-name">object-select-symbolic</property><property name="title">没有未闭环任务</property><property name="description">新建一项任务，从第一步开始。</property><style><class name="compact"/></style></object></property></object></child>
+                          </object>
+                        </child>
+                        <child><object class="GtkLabel"><property name="label">本地保存 · 无需联网</property><property name="margin-top">10</property><property name="margin-bottom">10</property><style><class name="dim-label"/><class name="caption"/></style></object></child>
+                      </object>
+                    </property>
+                  </object>
+                </property>
+              </object>
+            </property>
+            <property name="content">
+              <object class="AdwNavigationPage" id="detail_page">
+                <property name="title">任务详情</property>
+                <property name="child">
+                  <object class="AdwToolbarView">
+                    <child type="top">
+                      <object class="AdwHeaderBar">
+                        <property name="title-widget"><object class="GtkLabel"><property name="label">任务详情</property><style><class name="heading"/></style></object></property>
+                        <child type="end"><object class="GtkMenuButton" id="edit_button"><property name="icon-name">view-more-symbolic</property><property name="tooltip-text">任务操作：编辑或删除</property></object></child>
+                      </object>
+                    </child>
+                    <property name="content">
+                      <object class="GtkStack" id="detail_stack">
+                        <child><object class="GtkStackPage"><property name="name">empty</property><property name="child"><object class="AdwStatusPage"><property name="icon-name">view-list-symbolic</property><property name="title">每一步，都有记录</property><property name="description">选择一个任务查看进展，或创建你的第一项任务。</property><property name="child"><object class="GtkButton"><property name="label">新建任务</property><property name="halign">center</property><property name="action-name">win.new-task</property><style><class name="suggested-action"/><class name="pill"/></style></object></property></object></property></object></child>
+                        <child><object class="GtkStackPage"><property name="name">task</property><property name="child">
+                          <object class="GtkScrolledWindow" id="detail_scroll"><property name="hscrollbar-policy">never</property><property name="child">
+                            <object class="AdwClamp"><property name="maximum-size">780</property><property name="tightening-threshold">560</property><property name="child">
+                              <object class="GtkBox"><property name="orientation">vertical</property><property name="spacing">14</property><property name="margin-start">24</property><property name="margin-end">24</property><property name="margin-top">22</property><property name="margin-bottom">24</property>
+                                <child><object class="GtkBox"><property name="spacing">12</property>
+                                  <child><object class="GtkLabel" id="task_status"><property name="xalign">0</property><property name="hexpand">true</property><property name="valign">center</property><style><class name="caption-heading"/></style></object></child>
+                                  <child><object class="GtkButton" id="status_button"><property name="label">闭环任务</property><property name="valign">center</property><property name="action-name">win.change-status</property></object></child>
+                                </object></child>
+                                <child><object class="GtkLabel" id="task_title"><property name="xalign">0</property><property name="wrap">true</property><property name="wrap-mode">word-char</property><property name="selectable">true</property><style><class name="title-1"/></style></object></child>
+                                <child><object class="GtkLabel" id="task_description"><property name="xalign">0</property><property name="wrap">true</property><property name="wrap-mode">word-char</property><property name="selectable">true</property></object></child>
+                                <child><object class="GtkLabel" id="task_deadline"><property name="xalign">0</property><property name="wrap">true</property><property name="selectable">true</property></object></child>
+                                <child><object class="GtkLabel" id="task_meta"><property name="xalign">0</property><property name="wrap">true</property><property name="selectable">true</property><style><class name="dim-label"/><class name="caption"/></style></object></child>
+                                <child><object class="GtkSeparator"><property name="margin-top">8</property><property name="margin-bottom">8</property></object></child>
+                                <child><object class="GtkExpander" id="todo_expander"><property name="label">Todo 清单 · 可选</property><property name="child">
+                                  <object class="GtkBox"><property name="orientation">vertical</property><property name="spacing">10</property><property name="margin-top">12</property>
+                                    <child><object class="GtkListBox" id="todo_list"><property name="selection-mode">none</property><style><class name="boxed-list"/></style></object></child>
+                                    <child><object class="GtkButton" id="more_todos"><property name="label">加载更多 Todo</property><style><class name="flat"/></style></object></child>
+                                    <child><object class="GtkLabel" id="todo_empty"><property name="label">将任务拆成小步骤；不用清单也可以正常推进任务。</property><property name="xalign">0</property><property name="wrap">true</property><style><class name="dim-label"/></style></object></child>
+                                    <child><object class="GtkBox" id="todo_input_box"><property name="spacing">8</property>
+                                      <child><object class="GtkEntry" id="todo_input"><property name="hexpand">true</property><property name="max-length">500</property><property name="placeholder-text">添加一个可执行的小步骤…</property><accessibility><property name="label">新 Todo 内容，Enter 添加</property></accessibility></object></child>
+                                      <child><object class="GtkButton"><property name="icon-name">list-add-symbolic</property><property name="tooltip-text">添加 Todo</property><property name="action-name">win.add-todo</property><style><class name="suggested-action"/></style></object></child>
+                                    </object></child>
+                                  </object>
+                                </property></object></child>
+                                <child><object class="GtkSeparator"><property name="margin-top">8</property><property name="margin-bottom">8</property></object></child>
+                                <child><object class="GtkBox"><property name="spacing">8</property>
+                                  <child><object class="GtkLabel" id="history_heading"><property name="label">活动记录</property><property name="xalign">0</property><property name="hexpand">true</property><property name="wrap">true</property><style><class name="heading"/></style></object></child>
+                                  <child><object class="GtkDropDown" id="history_filter"><property name="tooltip-text">按活动类型筛选</property><accessibility><property name="label">活动类型筛选</property></accessibility></object></child>
+                                </object></child>
+                                <child><object class="GtkListBox" id="history_list"><property name="selection-mode">none</property><style><class name="boxed-list"/></style></object></child>
+                                <child><object class="GtkLabel" id="history_empty"><property name="label">当前筛选下没有活动记录</property><property name="xalign">0</property><property name="wrap">true</property><style><class name="dim-label"/></style></object></child>
+                                <child><object class="GtkButton" id="more_events"><property name="label">加载更早的记录</property><style><class name="flat"/></style></object></child>
+                              </object>
+                            </property></object>
+                          </property></object>
+                        </property></object></child>
+                      </object>
+                    </property>
+                    <child type="bottom">
+                      <object class="GtkBox" id="bottom_box"><property name="orientation">vertical</property>
+                        <child><object class="GtkSeparator"/></child>
+                        <child><object class="AdwClamp"><property name="maximum-size">780</property><property name="child">
+                          <object class="GtkBox" id="composer"><property name="orientation">vertical</property><property name="spacing">10</property><property name="margin-start">24</property><property name="margin-end">24</property><property name="margin-top">16</property><property name="margin-bottom">16</property>
+                            <child><object class="GtkLabel"><property name="label">新增进展</property><property name="xalign">0</property><style><class name="heading"/></style></object></child>
+                            <child><object class="GtkFrame"><property name="child"><object class="GtkScrolledWindow"><property name="min-content-height">82</property><property name="max-content-height">130</property><property name="propagate-natural-height">true</property><property name="hscrollbar-policy">never</property><property name="child"><object class="GtkTextView" id="progress_input"><property name="wrap-mode">word-char</property><property name="top-margin">10</property><property name="bottom-margin">10</property><property name="left-margin">12</property><property name="right-margin">12</property><accessibility><property name="label">进展说明，Ctrl+Enter 保存</property></accessibility></object></property></object></property></object></child>
+                            <child><object class="GtkBox"><property name="spacing">8</property>
+                              <child><object class="GtkLabel" id="draft_hint"><property name="label">Ctrl+Enter 保存进展</property><property name="xalign">0</property><property name="hexpand">true</property><property name="wrap">true</property><style><class name="dim-label"/><class name="caption"/></style></object></child>
+                              <child><object class="GtkButton" id="save_progress"><property name="label">添加进展</property><property name="action-name">win.save-progress</property><style><class name="suggested-action"/></style></object></child>
+                            </object></child>
+                          </object>
+                        </property></object></child>
+                        <child><object class="GtkLabel" id="closed_hint"><property name="label">任务已闭环。重新打开后可以继续添加进展。</property><property name="wrap">true</property><property name="margin-top">18</property><property name="margin-bottom">18</property><property name="margin-start">24</property><property name="margin-end">24</property><style><class name="dim-label"/></style></object></child>
+                      </object>
+                    </child>
+                  </object>
+                </property>
+              </object>
+            </property>
+          </object>
+        </property>
+      </object>
+    </property>
+  </template>
+</interface>
