@@ -755,10 +755,10 @@ msgstr "Close"
 #: steady/window.py:393
 #, python-brace-format
 msgid ""
-"Created {created_at}\n"
+"Created {created_at} · "
 "Last updated {updated_at}"
 msgstr ""
-"Création : {created_at}\n"
+"Création : {created_at} · "
 "Dernière modification : {updated_at}"
 
 #: steady/window.py:393

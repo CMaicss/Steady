@@ -758,10 +758,10 @@ msgstr "Закрыта"
 #: steady/window.py:393
 #, python-brace-format
 msgid ""
-"Created {created_at}\n"
+"Created {created_at} · "
 "Last updated {updated_at}"
 msgstr ""
-"Создана: {created_at}\n"
+"Создана: {created_at} · "
 "Обновлена: {updated_at}"
 
 #: steady/window.py:393

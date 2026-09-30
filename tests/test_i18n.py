@@ -55,6 +55,19 @@ class TranslationTests(unittest.TestCase):
                         self.assertEqual(expected, actual, (language, message))
                         text.format(**{field: 12 if spec else "Example" for field, spec, conversion in expected})
 
+    def test_task_dates_share_one_line_in_all_languages(self):
+        message = "Created {created_at} · Last updated {updated_at}"
+        created = "2026-09-29 10:20:30"
+        updated = "2026-09-30 11:22:33"
+        for language, name in i18n.LANGUAGES:
+            with self.subTest(language=language):
+                catalog = gettext.translation(i18n.DOMAIN, i18n.LOCALE_DIR, languages=[language])
+                text = catalog.gettext(message).format(created_at=created, updated_at=updated)
+                self.assertIn(created, text)
+                self.assertIn(updated, text)
+                self.assertIn(" · ", text)
+                self.assertNotIn("\n", text)
+
     def test_locale_aliases_and_fallback(self):
         self.assertEqual(i18n.resolve_language("zh-Hans-HK"), "zh_CN")
         cases = {"zh-CN": "zh_CN", "zh_SG.UTF-8": "zh_CN", "zh-Hans": "zh_CN", "zh-Hant": "zh_TW", "zh-Hant-HK": "zh_TW", "zh_TW": "zh_TW", "zh_HK": "zh_TW", "zh_MO": "zh_TW", "en_GB.UTF-8": "en", "de_DE@euro": "de", "fr_CA": "fr", "es_MX": "es", "ru_RU": "ru", "ja_JP": "ja", "pt_BR:fr:en": "fr", "pt_BR": "en", "C": "en", "C.UTF-8": "en"}

@@ -752,10 +752,10 @@ msgstr "已闭环"
 #: steady/window.py:393
 #, python-brace-format
 msgid ""
-"Created {created_at}\n"
+"Created {created_at} · "
 "Last updated {updated_at}"
 msgstr ""
-"创建于 {created_at}\n"
+"创建于 {created_at} · "
 "最近更新 {updated_at}"
 
 #: steady/window.py:393

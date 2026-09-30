@@ -752,10 +752,10 @@ msgstr "已結案"
 #: steady/window.py:393
 #, python-brace-format
 msgid ""
-"Created {created_at}\n"
+"Created {created_at} · "
 "Last updated {updated_at}"
 msgstr ""
-"建立於 {created_at}\n"
+"建立於 {created_at} · "
 "最近更新 {updated_at}"
 
 #: steady/window.py:393

@@ -50,6 +50,21 @@ def respond(dialog, response):
     settle()
 
 
+def check_detail_timestamps(window):
+    task = window.selected_task
+    lines = window.task_meta.get_text().splitlines()
+    assert len(lines) == (2 if task["closed_at"] else 1)
+    assert format_timestamp(task["created_at"], True) in lines[0]
+    assert format_timestamp(task["updated_at"], True) in lines[0]
+    if task["closed_at"]:
+        assert format_timestamp(task["closed_at"], True) in lines[1]
+    assert window.task_meta.get_wrap()
+    layout = window.task_meta.get_layout()
+    assert layout.get_pixel_size()[0] <= window.task_meta.get_width() + 1
+    if not window.split.get_collapsed():
+        assert layout.get_line_count() == len(lines)
+
+
 def check_status_row(window):
     settle()
     row = window.task_status.get_parent()
@@ -62,6 +77,7 @@ def check_status_row(window):
     assert status.x + status.width <= button.x
     assert abs(status.y + status.height / 2 - button.y - button.height / 2) <= 1
     assert button.width > 0 and button.x + button.width <= row.get_width()
+    check_detail_timestamps(window)
 
 
 def check_task_filter(window):
@@ -99,11 +115,8 @@ def check_task_metadata(window):
         assert format_timestamp(timestamp) in row.timestamp_label.get_text()
         assert format_timestamp(timestamp, True) in row.timestamp_label.get_tooltip_text()
         assert row.deadline_label.get_visible() == bool(task["deadline"] or task["status"] == "closed")
-        todo_label = row.deadline_label.get_next_sibling()
-        assert bool(todo_label) == bool(task["todo_total"])
-        if todo_label:
-            assert todo_label.get_text() == f"Todo {task['todo_done']} / {task['todo_total']}"
-        if not task["deadline"] and not task["todo_total"] and task["status"] == "open":
+        assert row.deadline_label.get_next_sibling() is None
+        if not task["deadline"] and task["status"] == "open":
             assert "\n" not in row.timestamp_label.get_text()
 
 
@@ -122,6 +135,8 @@ def check_management(window, store, output):
     row.check_button.set_active(True)
     settle()
     assert store.todo_counts(task_id) == (1, 2)
+    assert window.todo_expander.get_label().endswith("1 / 2")
+    check_task_metadata(window)
     assert store.get_todo(todo_id)["completed_at"]
     window.todo_list.get_first_child().check_button.set_active(False)
     settle()
@@ -181,6 +196,7 @@ def check_management(window, store, output):
     window.task_filter.set_selected(2)
     window.refresh(task_id)
     check_task_metadata(window)
+    check_detail_timestamps(window)
     assert not window.todo_list.get_first_child().check_button.get_sensitive()
     original_closed_at = store.get_task(task_id)["closed_at"]
     close_event = store.events(task_id, kinds=("closed",))[0]

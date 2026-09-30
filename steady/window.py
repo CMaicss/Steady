@@ -315,13 +315,11 @@ class MainWindow(Adw.ApplicationWindow):
         details = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=4, hexpand=True, valign=Gtk.Align.END)
         row.deadline_label = label(style="deadline-badge")
         details.append(row.deadline_label)
-        if task["todo_total"]:
-            details.append(label(f"Todo {task['todo_done']} / {task['todo_total']}", "caption"))
         footer.append(details)
         closed = task["status"] == "closed"
         prefix = _("Closed at") if closed else _("Updated at")
         timestamp = task["closed_at"] if closed else task["updated_at"]
-        separator = "\n" if task["deadline"] or task["todo_total"] or closed else " "
+        separator = "\n" if task["deadline"] or closed else " "
         row.timestamp_label = label(prefix + separator + format_timestamp(timestamp), "dim-label", wrap=False)
         row.timestamp_label.add_css_class("caption")
         row.timestamp_label.set_xalign(1)
@@ -390,7 +388,7 @@ class MainWindow(Adw.ApplicationWindow):
         self.task_description.set_visible(bool(task["description"]))
         self.task_status.set_text(pgettext("task-status", "Open") if opened else pgettext("task-status", "Closed"))
         self._status_style(self.task_status, "" if opened else "success")
-        self.task_meta.set_text(_("Created {created_at}\nLast updated {updated_at}").format(created_at=format_timestamp(task['created_at'], True), updated_at=format_timestamp(task['updated_at'], True)) + (_("\nClosed {closed_at}").format(closed_at=format_timestamp(task['closed_at'], True)) if task["closed_at"] else ""))
+        self.task_meta.set_text(_("Created {created_at} · Last updated {updated_at}").format(created_at=format_timestamp(task['created_at'], True), updated_at=format_timestamp(task['updated_at'], True)) + (_("\nClosed {closed_at}").format(closed_at=format_timestamp(task['closed_at'], True)) if task["closed_at"] else ""))
         self.status_button.set_label(_("Close Task") if opened else _("Reopen"))
         self._update_detail_deadline()
         self._render_todos()
